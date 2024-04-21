@@ -9,7 +9,7 @@ import CategoryList from '../../components/CategoryList/CategoryList';
 import OrderDetail from '../../components/OrderDetail/OrderDetail';
 import UserLogOut from '../../components/UserLogOut/UserLogOut';
 
-export default function NewOrderPage({ user, setUser }) {
+export default function ProductPage({ user, setUser }) {
   const [menuItems, setMenuItems] = useState([]);
   const [activeCat, setActiveCat] = useState('');
   const [cart, setCart] = useState(null);

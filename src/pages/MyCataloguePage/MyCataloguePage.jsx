@@ -6,14 +6,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../components/Logo/Logo';
 import MenuList from '../../components/MenuList/MenuList';
 import CategoryList from '../../components/CategoryList/CategoryList';
-import OrderDetail from '../../components/OrderDetail/OrderDetail';
+import ProductDetail from '../../components/Product/Product';
 import UserLogOut from '../../components/UserLogOut/UserLogOut';
 
-export default function NewOrderPage({ user, setUser }) {
-  const [menuItems, setMenuItems] = useState([]);
-  const [activeCat, setActiveCat] = useState('');
-  const [cart, setCart] = useState(null);
-  const categoriesRef = useRef([]);
+export default function MyCataloguePage({ user, setUser }) {
+
   const navigate = useNavigate();
 
   // The empty dependency array causes the effect
