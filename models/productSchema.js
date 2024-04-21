@@ -4,6 +4,8 @@ const productSchema = new Schema({
   name: { type: String, required: true },
   emoji: String,
   category: {type: Schema.Types.ObjectId, ref: 'Category'},
+  subCategory: {type: Schema.Types.ObjectId, ref: 'SubCategory'},
+  tags: [{type: Schema.Types.ObjectId, ref: 'Tag'}],
   price: { type: Number, required: true }
 }, {
   timestamps: true

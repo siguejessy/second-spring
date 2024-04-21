@@ -6,3 +6,6 @@ const productSchema = require('./productSchema');
 const Product = mongoose.model('Product', productSchema);
 
 module.exports = { Product, productSchema };
+
+
+//refactor this to include the subcategory and tags for querying
