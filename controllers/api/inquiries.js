@@ -1,4 +1,4 @@
-const Inquiry = require('../../models/inquiry');
+const Inquiry = require('../../models/inquirySchema');
 
 module.exports = {
   getAllForUser,
