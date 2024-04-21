@@ -1,32 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./InquiriesPage.css";
+import { getUser } from "../../utilities/users-service";
+import * as inquiriesAPI from "../../utilities/inquiries-api";
+import Inquiry from "../../components/Inquiry/Inquiry";
 
 export default function InquiriesPage({ user, setUser }) {
   const [inquiries, setInquiries] = useState([]);
   const [filteredInquiries, setFilteredInquiries] = useState([]);
+  const handleFilter = (category) => {
+    setFilteredInquiries(inquiries.filter((inquiry) => inquiry.category === category));
+  };
 
   return (
-    <main className="NewOrderPage">
+    <main className="InquiriesPage">
       <aside>
-        <Logo />
-        <CategoryList
-          categories={categoriesRef.current}
-          activeCat={activeCat}
-          setActiveCat={setActiveCat}
-        />
-        <Link to="/orders" className="button btn-sm">PREVIOUS ORDERS</Link>
-        <UserLogOut user={user} setUser={setUser} />
+        <h1>INQUIRIES</h1>
+          inquiries={filteredInquiries}
+          handleFilter={handleFilter}
       </aside>
-      <MenuList
-        menuItems={menuItems.filter(item => item.category.name === activeCat)}
-        handleAddToOrder={handleAddToOrder}
-      />
-      <OrderDetail
-        order={cart}
-        handleChangeQty={handleChangeQty}
-        handleCheckout={handleCheckout}
-      />
+      <Inquiry inquiries={filteredInquiries} />
+
     </main>
   );
 }

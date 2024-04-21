@@ -1,12 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import * as itemsAPI from '../../utilities/items-api';
-import * as ordersAPI from '../../utilities/orders-api';
+import * as productsAPI from '../../utilities/products-api';
 import './ProductPage.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../components/Logo/Logo';
-import MenuList from '../../components/MenuList/MenuList';
 import CategoryList from '../../components/CategoryList/CategoryList';
-import OrderDetail from '../../components/OrderDetail/OrderDetail';
 import UserLogOut from '../../components/UserLogOut/UserLogOut';
 
 export default function ProductPage({ user, setUser }) {
@@ -20,7 +17,7 @@ export default function ProductPage({ user, setUser }) {
   // to run ONLY after the FIRST render
   useEffect(function() {
     async function getItems() {
-      const items = await itemsAPI.getAll();
+      const items = await productsAPI.getAll();
       categoriesRef.current = [...new Set(items.map(item => item.category.name))];
       setMenuItems(items);
       setActiveCat(categoriesRef.current[0]);
