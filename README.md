@@ -19,3 +19,10 @@ A platform showcasing unique thrifted items in dedication to Design & Sustainabi
 * - view all products page
   - view product page
   - send an inquiry as a user
+
+Sprinkling in icebox items for easy future searchability/reference
+formated either inline, or as a commented-out block as such:
+<!-- icebox-browser-tab-icon -->
+ { /* icebox-browser-tab-icon */ } 
+review-this
+search for this string to find all the places where I've left a note to myself to review something

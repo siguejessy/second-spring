@@ -4,8 +4,9 @@ const bcrypt = require('bcrypt');
 
 const SALT_ROUNDS = 6;
 
+// Define a base user schema
 const userSchema = new Schema({
-  username: {type: String, required: true},
+  username: { type: String, required: true },
   email: {
     type: String,
     unique: true,
@@ -19,50 +20,45 @@ const userSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['customer', 'admin'],
-    default: 'customer'
+    enum: ['customer', 'admin'], 
+    required: true
   },
-  // Add the user's full name, address, and phone number
-  details: {
-  full_name: { type: String, required: true },
-  street_address: { type: String, required: true},
-  zip: { type: String, required: true }, 
-  phone: { type: String, required: true },
-  },
-  favorites: [{ type: Schema.Types.ObjectId, ref: 'Favorite', unique: [true, "Already added to your Favorites List"] }],
-  inquiries: [{ type: Schema.Types.ObjectId, ref: 'Inquiry', unique: [true, "Already added to your Inquiries List"] }],
-},{
+  // urlImage: { type: String, required: false } // icebox-profile picture
+}, {
   timestamps: true,
   toJSON: {
-    transform: function(doc, ret) {
+    transform: function (doc, ret) {
       delete ret.password;
       return ret;
     }
   }
 });
 
-userSchema.pre('save', async function(next) {
-  // 'this' is the user document
+// Middleware to hash the password before saving
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
-  // Replace the password with the computed hash
   this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
-  return next();
+  next();
 });
 
-module.exports = mongoose.model('User', userSchema);
+const customerSchema = new Schema({
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
+  first_name: { type: String, required: true },
+  last_name: { type: String, required: true },
+  phone: { type: String, required: true },
+});
 
-// Define admin schema
+
 const adminSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
-  // role: { //Ice box adding employee role
-  //   type: String,
-  //   enum: ['admin'],
-  //   default: 'admin'
-  // }
+  first_name: { type: String, required: true },
+  last_name: { type: String, required: true },
+  phone: { type: String, required: true },
 });
 
 // Define models
 const User = mongoose.model('User', userSchema);
+const Customer = mongoose.model('Customer', customerSchema);
 const Admin = mongoose.model('Admin', adminSchema);
 
-module.exports = { User, Admin };
+module.exports = { User, Customer, Admin };

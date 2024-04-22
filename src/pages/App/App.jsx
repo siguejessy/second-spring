@@ -15,9 +15,10 @@ import { getProductById, getProductByName, getAll } from '../../utilities/produc
 import * as categories from '../../utilities/categories-api';
 import AuthPage from '../AuthPage/AuthPage';
 import SearchPage from '../SearchPage/SearchPage';
+import { getUser } from '../../utilities/users-service';
 
 export default function App() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(getUser());
   const location = useLocation();
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export default function App() {
         <NavBar
           user={user}
           setUser={setUser}
-          products={getProductByName, getProductById, getAll}
+          products={[getProductByName, getProductById, getAll]}
           categories={categories.getAllCategories}
         />
         <Routes>

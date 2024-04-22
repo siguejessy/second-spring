@@ -42,4 +42,22 @@ export function getUser() {
   return token ? JSON.parse(atob(token.split('.')[1])).user : null;
 }
 
+export function checkToken() {
+  // Just so that you don't forget how to use .then
+  return usersAPI.checkToken()
+    // checkToken returns a string, but let's 
+    // make it a Date object for more flexibility
+    .then(dateStr => new Date(dateStr));
+}
 
+export function getOne(id) {
+  return usersAPI.getOne(id);
+}
+
+export function updateUser(id, data) {
+  return usersAPI.updateUser(id, data);
+}
+
+export function getAdmin(id) {
+  return usersAPI.getAdmin(id);
+}
