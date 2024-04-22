@@ -1,26 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import "./InquiriesPage.css";
-import { getUser } from "../../utilities/users-service";
-import * as inquiriesAPI from "../../utilities/inquiries-api";
-import Inquiry from "../../components/Inquiry/Inquiry";
+import React, { useState, useEffect } from 'react';
+import * as inquiriesAPI from '../../utilities/inquiries-api';
+import Inquiry from '../../components/Inquiry/Inquiry';
+import './InquiriesPage.css';
 
-export default function InquiriesPage({ user, setUser }) {
+const InquiriesPage = () => {
   const [inquiries, setInquiries] = useState([]);
-  const [filteredInquiries, setFilteredInquiries] = useState([]);
-  const handleFilter = (category) => {
-    setFilteredInquiries(inquiries.filter((inquiry) => inquiry.category === category));
-  };
+
+  useEffect(() => {
+    async function fetchInquiries() {
+      try {
+        const fetchedInquiries = await inquiriesAPI.getAllForAdmin();
+        setInquiries(fetchedInquiries);
+      } catch (error) {
+        console.error('Error fetching inquiries:', error);
+      }
+    }
+
+    fetchInquiries();
+  }, []);
 
   return (
-    <main className="InquiriesPage">
-      <aside>
-        <h1>INQUIRIES</h1>
-          inquiries={filteredInquiries}
-          handleFilter={handleFilter}
-      </aside>
-      <Inquiry inquiries={filteredInquiries} />
-
-    </main>
+    <div className="inquiries-page">
+      <h2>Inquiries</h2>
+      <div className="inquiries-list">
+        {inquiries.map((inquiry) => (
+          <Inquiry key={inquiry._id} inquiry={inquiry} />
+        ))}
+      </div>
+    </div>
   );
-}
+};
+
+export default InquiriesPage;

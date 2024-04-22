@@ -30,7 +30,6 @@ app.use('/api/users', require('./routes/api/users'));
 const ensureLoggedIn = require('./config/ensureLoggedIn');
 app.use('/api/inquiries', ensureLoggedIn, require('./routes/api/inquiries'));
 app.use('/api/users', ensureLoggedIn, require('./routes/api/users'));
-app.use('/api/orders', ensureLoggedIn, require('./routes/api/orders'));
 
 
 // The following "catch all" route (note the *) is necessary

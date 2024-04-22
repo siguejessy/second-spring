@@ -1,6 +1,6 @@
-const Inquiry = require('../../models/inquirySchema');
+import Inquiry from '../../models/inquirySchema';
 
-module.exports = {
+export {
   getAllForUser,
   create,
   respond,
@@ -23,7 +23,7 @@ async function create(req, res) {
       user: req.user._id,
       product: productId,
       message: message,
-      status: 'Pending', // Set initial status to Pending
+      status: 'Pending', // initial status Pending
     });
     await newInquiry.save();
     res.status(201).json(newInquiry);
@@ -43,21 +43,9 @@ async function respond(req, res) {
 
     // Check if the user making the request is an admin
     if (req.user.role === 'admin') {
-      // Update inquiry's response and status
-      inquiry.response = response;
-      inquiry.status = status; // Update status based on admin's choice
-      // If status is 'Closed' and there's a sub reason, update sub reason
-      if (status === 'Closed' && subReason) {
-        inquiry.subReason = subReason;
-      }
+      handleAdminResponse(inquiry, response, status, subReason);
     } else {
-      // Check if the inquiry is already closed
-      if (inquiry.status === 'Closed') {
-        return res.status(403).json({ error: 'Inquiry is already closed' });
-      }
-      // Update inquiry's user response
-      inquiry.userResponse = response;
-      inquiry.status = status; // Update status based on user's choice
+      handleUserResponse(inquiry, response, status);
     }
 
     await inquiry.save();
@@ -66,4 +54,22 @@ async function respond(req, res) {
     console.error(error);
     res.status(500).json({ error: 'Server Error' });
   }
+}
+
+function handleAdminResponse(inquiry, response, status, subReason) {
+  // Update inquiry's response and status
+  inquiry.response = response;
+  inquiry.status = status; // Update status based on admin's choice
+  // If status is 'Closed' and there's a sub reason, update sub reason
+  if (status === 'Closed' && subReason) {
+    inquiry.subReason = subReason;
+  }
+}
+
+function handleUserResponse(inquiry, response, status) {
+  if (inquiry.status === 'Closed') {
+    throw new Error('Inquiry is already closed');
+  }
+  inquiry.userResponse = response;
+  inquiry.status = status; 
 }

@@ -1,32 +1,25 @@
 import sendRequest from './send-request';
 
-const BASE_URL = '/api/inquiries';
-
-// Retrieve an unpaid order for the logged in user
-export function getCart() {
-  return sendRequest(`${BASE_URL}/cart`);
+export async function createInquiry(inquiryData) {
+  return await sendRequest('/api/inquiries', 'POST', inquiryData);
 }
 
-// Add an item to the cart
-export function addItemToCart(itemId) {
-  // Just send itemId for best security (no pricing)
-  return sendRequest(`${BASE_URL}/cart/items/${itemId}`, 'POST');
+export async function getAllForUser() {
+  try {
+    const response = await sendRequest('/api/inquiries');
+    return response;
+  } catch (error) {
+    console.error('Error fetching inquiries for user:', error.message);
+    throw new Error('Failed to fetch inquiries for user');
+  }
 }
 
-// Update the item's qty in the cart
-// Will add the item to the order if not currently in the cart
-// Sending info via the data payload instead of a long URL
-export function setItemQtyInCart(itemId, newQty) {
-  return sendRequest(`${BASE_URL}/cart/qty`, 'PUT', { itemId, newQty });
-}
-
-// Updates the order's (cart's) isPaid property to true
-export function checkout() {
-  // Changing data on the server, so make it a POST request
-  return sendRequest(`${BASE_URL}/cart/checkout`, 'POST');
-}
-
-// Fetches all orders for the logged in user
-export function getAllForUser() {
-  return sendRequest(`${BASE_URL}`);
+export async function getAllForAdmin() {
+  try {
+    const response = await sendRequest('/api/admin/inquiries');
+    return response;
+  } catch (error) {
+    console.error('Error fetching inquiries for admin:', error.message);
+    throw new Error('Failed to fetch inquiries for admin');
+  }
 }

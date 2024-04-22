@@ -1,14 +1,51 @@
-import sendRequest from "./send-request";
-const BASE_URL = '/api/products';
+import sendRequest from './send-request';
 
 export async function getAll() {
-  return sendRequest(BASE_URL);
+  try {
+    const response = await sendRequest('/api/products');
+    return response;
+  } catch (error) {
+    console.error('Error fetching all products:', error.message);
+    throw new Error('Failed to fetch all products');
+  }
 }
 
-// This function is never actually used in SEI CAFE,
-// it's only provided here to remind you to follow
-// RESTful routing, etc.
-export async function getById(id) {
-  return sendRequest(`${BASE_URL}/${id}`);
+export async function getProductById(productId) {
+  try {
+    const response = await sendRequest(`/api/products/${productId}`);
+    return response;
+  } catch (error) {
+    console.error(`Error fetching product with ID ${productId}:`, error.message);
+    throw new Error(`Failed to fetch product with ID ${productId}`);
+  }
 }
 
+export async function createProduct(productData) {
+  try {
+    const response = await sendRequest('/api/products', 'POST', productData);
+    return response;
+  } catch (error) {
+    console.error('Error creating product:', error.message);
+    throw new Error('Failed to create product');
+  }
+}
+
+export async function updateProduct(productId, productData) {
+  try {
+    const response = await sendRequest(`/api/products/${productId}`, 'PUT', productData);
+    return response;
+  } catch (error) {
+    console.error(`Error updating product with ID ${productId}:`, error.message);
+    throw new Error(`Failed to update product with ID ${productId}`);
+  }
+}
+
+export async function deleteProduct(productId) {
+  try {
+    const response = await sendRequest(`/api/products/${productId}`, 'DELETE');
+    return response;
+  } catch (error) {
+    console.error(`Error deleting product with ID ${productId}:`, error.message);
+    throw new Error(`Failed to delete product with ID ${productId}`);
+  }
+}
