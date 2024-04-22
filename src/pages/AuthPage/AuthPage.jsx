@@ -6,25 +6,14 @@ import SignUpForm from '../../components/SignUpForm/SignUpForm';
 
 
 export default function AuthPage({ setUser }) {
-  const [showSignUp, setShowSignUp] = useState(false);
+  const [showLogin, setShowLogin] = useState(true);
   return (
-    <main className='auth-lander'>
-      <div className='auth-blurb'>
-        <h2>Second Spring</h2>
-        <h3></h3>
-        <h3></h3>
+    <main className="AuthPage">
+      <div>
+        {/* <Logo /> */}
+        <h3 onClick={() => setShowLogin(!showLogin)}>{showLogin ? 'SIGN UP' : 'LOG IN'}</h3>
       </div>
-
-      <div className='lander-form'>
-      <h2>Sign Up or Log In</h2>
-      <button className="toggle"
-      onClick={() => setShowSignUp(!showSignUp)}>{showSignUp ? 'Log In' : 'Sign Up'}</button>
-      { showSignUp ?
-          <SignUpForm setUser={setUser} />
-          :
-          <LoginForm setUser={setUser} />
-      }
-      </div>
+      {showLogin ? <LoginForm setUser={setUser} /> : <SignUpForm setUser={setUser} />}
     </main>
   );
 }

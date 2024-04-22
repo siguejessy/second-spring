@@ -22,11 +22,10 @@ export default class SignUpForm extends Component {
     evt.preventDefault();
     try {
       const {username, email, password, role} = this.state;
-
       // const urlImage = 'https://Profile_Picture.svg.png' // icebox-profile picture
       const formData = {username, email, password, role, }// urlImage}; <-- icebox-profile picture add in
-      // The promise returned by the signUp service method will resolve to the user object included
-      // in the payload of the JSON Web Token (JWT)
+      delete formData.error;
+      delete formData.confirm;
       const user = await signUp(formData);
       this.props.setUser(user);
     } catch {

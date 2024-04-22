@@ -127,7 +127,7 @@ async function updateUser(req, res) {
       };
       await Customer.findOneAndUpdate({ user: userId }, updatedCustomerData);
 
-      // Update the vendor linked to the user
+      // Update the Admin linked to the user
       const updatedAdminData = {
         phone: req.body.adminphone || 'Default Phone Number',
       };
@@ -139,4 +139,14 @@ async function updateUser(req, res) {
     console.log(err);
     res.status(400).json(err);
   }
+}
+
+
+function createJWT(user) {
+  return jwt.sign(
+    // data payload
+    { user },
+    process.env.SECRET,
+    { expiresIn: '24h' }
+  );
 }
