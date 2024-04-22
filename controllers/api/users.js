@@ -15,6 +15,14 @@ module.exports = {
 };
 async function create(req, res) {
   try {
+    // Convert the role to lowercase
+    req.body.role = req.body.role.toLowerCase();
+    
+    // Check if the provided role is valid
+    if (!['customer', 'admin'].includes(req.body.role)) {
+      throw new Error('Invalid role');
+    }
+
     const user = await User.create(req.body);
     if (user.role === 'customer') {
       // Create a customer linked to the user

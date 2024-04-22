@@ -43,17 +43,17 @@ userSchema.pre('save', async function (next) {
 
 const customerSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
-  first_name: { type: String, required: true },
-  last_name: { type: String, required: true },
-  phone: { type: String, required: true },
+  first_name: { type: String},
+  last_name: { type: String},
+  phone: { type: String},
 });
 
 
 const adminSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
-  first_name: { type: String, required: true },
-  last_name: { type: String, required: true },
-  phone: { type: String, required: true },
+  first_name: { type: String },
+  last_name: { type: String },
+  phone: { type: String},
 });
 
 // Define models
