@@ -5,7 +5,7 @@ module.exports = {
     show,
     create,
     update,
-    deleteItem,
+    deleteProduct,
 };
 
 async function index(req, res) {
@@ -59,7 +59,7 @@ async function update(req, res) {
     }
 }
 
-async function deleteItem(req, res) {
+async function deleteProduct(req, res) {
     try {
         const product = await Product.findById(req.params.id);
         if (!product) {
