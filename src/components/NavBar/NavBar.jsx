@@ -5,32 +5,38 @@ import { useState } from "react";
 import "./NavBar.css";
 
 export default function NavBar({ user, setUser }) {
+  const navigate = useNavigate();
+  const [newSearch, setNewSearch] = useState("");
+
+  function handleSearch(e) {
+    e.preventDefault();
+    if (newSearch.length > 0) {
+      navigate(`/search/${newSearch}`); // Redirect to /search/:query route
+      setNewSearch("");
+    } else {
+      alert("Search bar empty");
+    }
+  }
+
   function handleLogOut() {
     userService.logOut();
     setUser(null);
   }
 
-  const navigate = useNavigate()
-    const [newSearch, setNewSearch] = useState("")
-
-    function handleSearch(e){
-      e.preventDefault()
-      if (newSearch.length > 0){
-        navigate("/search", {state: newSearch})
-        setNewSearch("")
-      }
-      else {
-        alert("Search bar empty")
-      }
-    }
-
   return (
-    <>
-      <nav id="navbar" className="navbar">
-      <form className="nav-search"onSubmit={handleSearch}>
-          <input onChange={(evt) => setNewSearch(evt.target.value)} className="nav-search-input" type="search" placeholder="Search" aria-label="Search" value={newSearch}/>
-          <button className="nav-search-btn " type="submit"></button>
-        </form>
+    <nav id="navbar" className="navbar">
+      <form className="nav-search" onSubmit={handleSearch}>
+        <input
+          onChange={(evt) => setNewSearch(evt.target.value)}
+          className="nav-search-input"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+          value={newSearch}
+        />
+        <button className="nav-search-btn" type="submit"></button>
+      </form>
+      <div>
         <Link to="/shop">Shop</Link>
         &nbsp; | &nbsp;
         <Link to="/shop/all">All</Link>
@@ -42,18 +48,25 @@ export default function NavBar({ user, setUser }) {
         <Link to="/shop/glassware">Glassware</Link>
         &nbsp; | &nbsp;
         <Link to="/about">About</Link>
-        &nbsp; | &nbsp;
-        <Link to="login">Login</Link>
-        &nbsp; | &nbsp;
-        <Link to="/profile">Profile</Link>
-        &nbsp; | &nbsp;
-        <Link className="logout" to="" onClick={handleLogOut}>
-            Log Out
-        </Link>
-      <div className="logo">
-      <p>Welcome, {user.username}</p>
+        {user ? (
+          <>
+            &nbsp; | &nbsp;
+            <Link to="/profile">My Profile</Link>
+            &nbsp; | &nbsp;
+            <Link className="logout" to="" onClick={handleLogOut}>
+              Log Out
+            </Link>
+            <div className="logo">
+              <p>Welcome, {user.username}</p>
+            </div>
+          </>
+        ) : (
+          <>
+            &nbsp; | &nbsp;
+            <Link to="/login">Login</Link>
+          </>
+        )}
       </div>
-      </nav>
-    </>
+    </nav>
   );
 }
