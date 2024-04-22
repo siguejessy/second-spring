@@ -20,6 +20,16 @@ export async function getProductById(productId) {
   }
 }
 
+export async function getProductByName(productName) {
+  try {
+    const response = await sendRequest(`/api/products?name=${productName}`);
+    return response;
+  } catch (error) {
+    console.error(`Error fetching product with name ${productName}:`, error.message);
+    throw new Error(`Failed to fetch product with name ${productName}`);
+  }
+}
+
 export async function createProduct(productData) {
   try {
     const response = await sendRequest('/api/products', 'POST', productData);

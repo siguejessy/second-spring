@@ -19,14 +19,6 @@ export default function ShopBooksPage({ user, setUser }) {
 
   return (
     <main className="ShopBooksPage">
-      <aside>
-        <Logo />
-        <CategoryList
-          categories={categoriesRef.current}
-          activeCat=""
-        />
-        <UserLogOut user={user} setUser={setUser} />
-      </aside>
       <section className="product-list">
         <ProductDetail />
       </section>
