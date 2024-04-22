@@ -6,6 +6,7 @@ import UserLogOut from '../../components/UserLogOut/UserLogOut';
 import ShopBooksPage from '../ShopBooksPage/ShopBooksPage'
 import ShopDecorPage from '../ShopDecorPage/ShopDecorPage';
 import ShopGlasswarePage from '../ShopGlasswarePage/ShopGlasswarePage';
+import NavBar from '../../components/NavBar/NavBar';
 
 export default function ShopPage({ user, setUser, products }) {
   const categoriesRef = useRef([]);
@@ -16,20 +17,11 @@ export default function ShopPage({ user, setUser, products }) {
   }, [products]);
 
   return (
+    <>
+    <NavBar />
     <main className="ShopPage">
-      <aside>
-        <Logo />
-        <CategoryList
-          categories={categoriesRef.current}
-          activeCat=""
-        />
-        <UserLogOut user={user} setUser={setUser} />
-      </aside>
-      <section className="product-list">
-        <ShopBooksPage products={products} />
-        <ShopDecorPage products={products} />
-        <ShopGlasswarePage products={products} />
-      </section>
+
     </main>
+    </>
   );
 }

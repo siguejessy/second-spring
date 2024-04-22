@@ -1,6 +1,6 @@
-import Inquiry from '../../models/inquirySchema';
+const Inquiry = require('../../models/inquirySchema');
 
-export {
+module.exports = {
   getAllForUser,
   create,
   respond,
