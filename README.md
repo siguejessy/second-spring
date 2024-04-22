@@ -11,9 +11,11 @@ A platform showcasing unique thrifted items in dedication to Design & Sustainabi
 * - add navbar to app so it renders on /shop (homepage)
   - add navbar render on all pages
 <br>
+
 * - profile page for admin
   - crud product functionality for admin
 <br>
+
 * - view all products page
   - view product page
   - send an inquiry as a user
