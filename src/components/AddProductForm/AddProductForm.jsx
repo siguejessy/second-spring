@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./AddProductForm.css";
 import { createProduct } from '../../utilities/products-api';
-import { getAllCategories, getCategoryById, getCategoryByName getSubCategoriesByCategoryId } from '../../utilities/categories-api';
+import { getAllCategories, getSubCategoriesByCategoryId, getAllTags } from '../../utilities/categories-api';
 
 const AddProductForm = () => {
   const [productData, setProductData] = useState({

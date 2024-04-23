@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductDetail from '../../components/ProductDetail/ProductDetail';
 import InquiryForm from '../../components/InquiryForm/InquiryForm';
-import { getProductById } from '../../utilities/products-api';
+import { getProductById } from '../../controllers/api/products';
 
 const ProductPage = ({ user }) => {
   const { productId } = useParams();
@@ -11,7 +11,7 @@ const ProductPage = ({ user }) => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const fetchedProduct = await getProductById(productId);
+        const fetchedProduct = await getProductById(productId); // Fetch product by ID
         setProduct(fetchedProduct);
       } catch (error) {
         console.error('Error fetching product:', error);
@@ -28,7 +28,7 @@ const ProductPage = ({ user }) => {
           {user && (
             <div>
               <h2>Send an Inquiry</h2>
-              <InquiryForm productId={productId} />
+              <InquiryForm productId={product._id} />
             </div>
           )}
         </div>

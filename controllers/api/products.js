@@ -1,14 +1,15 @@
 const { Product } = require('../../models/product');
 
 module.exports = {
-    index,
-    show,
+    getAll,
     create,
-    update,
+    updateProduct,
     deleteProduct,
+    getProductsByName,
+    getProductById,
 };
 
-async function index(req, res) {
+async function getAll(req, res) {
     try {
         const products = await Product.find({}).sort('name');
         res.json(products);
@@ -17,58 +18,52 @@ async function index(req, res) {
     }
 }
 
-async function show(req, res) {
-    try {
-        const product = await Product.findById(req.params.id);
-        if (!product) {
-            return res.status(404).json({ error: 'Product not found' });
-        }
-        res.json(product);
-    } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
-    }
-} 
-
 async function create(req, res) {
     try {
-        const product = new Product(req.body);
-        const savedProduct = await product.save();
-        res.status(201).json(savedProduct);
+      const createProduct = await Product.create({ ...req.body, user: req.user._id });
+      res.json(createProduct);
     } catch (error) {
-        res.status(400).json({ error: 'Bad request' });
+      console.log(error);
     }
-}
+  }
 
-async function update(req, res) {
-    try {
-        const product = await Product.findById(req.params.id);
-        if (!product) {
-            return res.status(404).json({ error: 'Product not found' });
-        }
-        product.name = req.body.name;
-        product.emoji = req.body.emoji;
-        product.category = req.body.category;
-        product.subCategory = req.body.subCategory;
-        product.tags = req.body.tags;
-        product.description = req.body.description;
-        product.price = req.body.price;
-
-        const updatedProduct = await product.save();
-        res.json(updatedProduct);
-    } catch (error) {
-        res.status(400).json({ error: 'Bad request' });
+  async function updateProduct(req, res) {
+    try{
+        const updateProduct = await Product.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        res.status(200).json({ message: 'Product updated successfully' });
+    }catch (err){
+        res.json(err);
     }
 }
 
 async function deleteProduct(req, res) {
     try {
-        const product = await Product.findById(req.params.id);
-        if (!product) {
-            return res.status(404).json({ error: 'Product not found' });
-        }
-        await product.remove();
-        res.json({ message: 'Product deleted successfully' });
+      const deleteProduct = await Product.findByIdAndDelete(req.params.id);
+      res.json(deleteProduct);
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+      console.log(error);
     }
-}
+  }
+  
+    async function getProductsByName(req, res) {
+        try {
+            const products = await Product.find({ name: req.params.name });
+            res.json(products);
+        }
+        catch (error) {
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+    
+    async function getProductById(req, res) {
+        try {
+            const product = await Product.findById(req.params.id);
+            if (!product) {
+                return res.status(404).json({ message: 'Product not found' });
+            }
+            res.json(product);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Server Error' });
+        }
+    }

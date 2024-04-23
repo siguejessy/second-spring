@@ -10,7 +10,6 @@ import ShopDecorPage from '../ShopDecorPage/ShopDecorPage';
 import ShopGlasswarePage from '../ShopGlasswarePage/ShopGlasswarePage';
 import ProductPage from '../ProductPage/ProductPage';
 import AboutPage from '../AboutPage/AboutPage';
-import { getProductById, getProductByName, getAll } from '../../utilities/products-api';
 import * as categories from '../../utilities/categories-api';
 import AuthPage from '../AuthPage/AuthPage';
 import { getUser } from '../../utilities/users-service';
@@ -31,7 +30,7 @@ export default function App() {
         <NavBar
           user={user}
           setUser={setUser}
-          products={[getProductByName, getProductById, getAll]}
+          products={getAll}
           categories={categories.getAllCategories}
         />
         <Routes>
