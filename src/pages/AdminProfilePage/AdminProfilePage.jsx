@@ -1,32 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import CardProductDetail from '../../components/CardProductDetail/CardProductDetail';
-import { deleteProduct, getAdminProducts } from '../../utilities/products-api';
+import { getAll } from '../../utilities/products-api';
+import { getUser } from '../../utilities/users-service';
 
 const AdminProfilePage = () => {
   const [products, setProducts] = useState([]);
+  const user = getUser();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const adminProducts = await getAdminProducts();
-        setProducts(adminProducts);
+        const allProducts = await getAll();
+        // Filter products based on the created_by field
+        const userProducts = allProducts.filter(product => product.created_by === user.id);
+        setProducts(userProducts);
       } catch (error) {
-        console.error('Error fetching admin products:', error);
+        console.error('Error fetching user products:', error);
       }
     };
 
     fetchProducts();
-  }, []);
-
-  const handleDelete = async (productId) => {
-    try {
-      await deleteProduct(productId);
-      setProducts(products.filter(product => product.id !== productId));
-    } catch (error) {
-      console.error('Error deleting product:', error);
-    }
-  };
+  }, [user.id]); //
 
   return (
     <main className='AdminProfilePage'>
@@ -41,10 +36,7 @@ const AdminProfilePage = () => {
         {products.map(product => (
           <div key={product.id}>
             <CardProductDetail product={product} />
-            <button onClick={() => handleDelete(product.id)}>Delete</button>
-            <Link to={`/products/${product.id}/edit`}>
-              <button>Update</button>
-            </Link>
+            {/* Add delete and update functionality as needed */}
           </div>
         ))}
       </div>

@@ -39,8 +39,6 @@ export default function NavBar({ user, setUser }) {
       <div>
         <Link to="/shop">Shop</Link>
         &nbsp; | &nbsp;
-        <Link to="/shop/all">All</Link>
-        &nbsp; | &nbsp;
         <Link to="/shop/books">Books</Link>
         &nbsp; | &nbsp;
         <Link to="/shop/decor">Decor</Link>

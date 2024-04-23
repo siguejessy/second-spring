@@ -59,14 +59,3 @@ export async function deleteProduct(productId) {
     throw new Error(`Failed to delete product with ID ${productId}`);
   }
 }
-
-
-export async function getAdminProducts() {
-  try {
-    const response = await sendRequest('/api/products/admin');
-    return response;
-  } catch (error) {
-    console.error('Error fetching admin products:', error.message);
-    throw new Error('Failed to fetch admin products');
-  }
-}
