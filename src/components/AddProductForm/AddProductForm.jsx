@@ -86,6 +86,9 @@ const AddProductForm = () => {
         <label>Category:</label>
         <select name="category" value={productData.category} onChange={handleCategoryChange}>
           <option value="">Select category...</option>
+          <option value="book">Book</option>
+          <option value="decor">Decor</option>
+          <option value="glassware">Glassware</option>
           {categories.map(category => (
             <option key={category._id} value={category._id}>{category.name}</option>
           ))}
@@ -95,6 +98,11 @@ const AddProductForm = () => {
         <label>Sub-category:</label>
         <select name="subCategory" value={productData.subCategory} onChange={handleSubCategoryChange}>
           <option value="">Select sub-category...</option>
+          <option value="art">Art</option>
+          <option value="furniture">Furniture</option>
+          <option value="mirror">Mirror</option>
+          <option value="serving-set">Serving Set</option>
+          <option value="vase">Vase</option>
           {subCategories.map(subCategory => (
             <option key={subCategory._id} value={subCategory._id}>{subCategory.name}</option>
           ))}
@@ -118,11 +126,8 @@ const AddProductForm = () => {
       </div>
       <div>
         <label>Tags:</label>
-        <select multiple name="tags" value={productData.tags} onChange={handleTagChange}>
-          {tags.map(tag => (
-            <option key={tag._id} value={tag._id}>{tag.name}</option>
-          ))}
-        </select>
+        <input type="text" name="tags" value={productData.tags} onChange={handleChange} />
+        <p>Enter tags separated by commas (e.g., example-of-tag, second-example, another, another-tag)</p>
       </div>
       <button type="submit">Add Product</button>
     </form>
