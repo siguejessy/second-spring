@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import { getUser } from '../../utilities/users-service';
 import AdminProfilePage from '../../pages/AdminProfilePage/AdminProfilePage';
 import CustomerProfilePage from '../../pages/CustomerProfilePage/CustomerProfilePage';

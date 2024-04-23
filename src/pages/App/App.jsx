@@ -16,6 +16,7 @@ import * as categories from '../../utilities/categories-api';
 import AuthPage from '../AuthPage/AuthPage';
 import SearchPage from '../SearchPage/SearchPage';
 import { getUser } from '../../utilities/users-service';
+import AddProductPage from '../AddProductPage/AddProductPage';
 
 export default function App() {
   const [user, setUser] = useState(getUser());
@@ -38,14 +39,15 @@ export default function App() {
           <Route path="/" element={<Navigate to="/shop" />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/shop/all" element={<ShopAllPage />} />
-          <Route path="/shop/books" element={<ShopBooksPage />} />
+          {/* <Route path="/shop/books" element={<ShopBooksPage />} />
           <Route path="/shop/decor" element={<ShopDecorPage user={user} setUser={setUser} />} />
           <Route path="/shop/glassware" element={<ShopGlasswarePage user={user} setUser={setUser} />} />
           <Route path="shop/all/:category" element={<ShopAllPage/>} />
-          <Route path="search/:query" element={<SearchPage />} />
+          <Route path="search/:query" element={<SearchPage />} /> */}
           <Route path="/profile" element={<ProfilePage user={user} setUser={setUser} />} />
           <Route path="/profile/inquiries" element={<InquiriesPage user={user} />} />
           <Route path="/product/:id" element={<ProductPage user={user} setUser={setUser} />} />
+          <Route path="/product/new" element={<AddProductPage user={user} setUser={setUser} />} />
          <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<AuthPage user={user} setUser={setUser} />} />
         </Routes>

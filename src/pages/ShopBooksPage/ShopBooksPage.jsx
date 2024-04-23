@@ -1,27 +1,34 @@
-import { useState, useEffect, useRef } from 'react';
-import * as productsAPI from '../../utilities/products-api';
-import './ShopBooksPage.css';
-import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../../components/Logo/Logo';
-import CategoryList from '../../components/CategoryList/CategoryList';
-import UserLogOut from '../../components/UserLogOut/UserLogOut';
-import ProductDetail from '../../components/ProductDetail/ProductDetail'; // Import your product detail component
+import React, { useState, useEffect } from 'react';
+import CardProductDetail from '../../components/CardProductDetail/CardProductDetail';
+import { getAll } from '../../utilities/products-api';
 
-export default function ShopBooksPage({ user, setUser }) {
-  const categoriesRef = useRef([]);
-  const [products, setProducts] = useState([]);
-  const navigate = useNavigate();
+const ShopBooksPage = () => {
+  const [bookProducts, setBookProducts] = useState([]);
 
-  useEffect(function() {
-    
+  useEffect(() => {
+    const fetchBookProducts = async () => {
+      try {
+        const allProducts = await getAll();
+        const bookProducts = allProducts.filter(product => product.category === 'Book');
+        setBookProducts(bookProducts);
+      } catch (error) {
+        console.error('Error fetching book products:', error);
+      }
+    };
+
+    fetchBookProducts();
   }, []);
 
-
   return (
-    <main className="ShopBooksPage">
-      <section className="product-list">
-        <ProductDetail />
-      </section>
-    </main>
+    <div className='ShopBooksPage'>
+      <h2>Shop Books</h2>
+      <div className='product-gallery'>
+        {bookProducts.map(product => (
+          <CardProductDetail key={product.id} product={product} />
+        ))}
+      </div>
+    </div>
   );
-}
+};
+
+export default ShopBooksPage;

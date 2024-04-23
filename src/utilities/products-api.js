@@ -32,7 +32,7 @@ export async function getProductByName(productName) {
 
 export async function createProduct(productData) {
   try {
-    const response = await sendRequest('/api/products', 'POST', productData);
+    const response = await sendRequest('/api/products/new', 'POST', productData);
     return response;
   } catch (error) {
     console.error('Error creating product:', error.message);

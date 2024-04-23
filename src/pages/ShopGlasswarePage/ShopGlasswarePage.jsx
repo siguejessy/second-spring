@@ -1,77 +1,34 @@
-import { useState, useEffect, useRef } from 'react';
-import * as productsAPI from '../../utilities/products-api';
-import './ShopGlasswarePage.css';
-import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../../components/Logo/Logo';
-import CategoryList from '../../components/CategoryList/CategoryList';
-import UserLogOut from '../../components/UserLogOut/UserLogOut';
+import React, { useState, useEffect } from 'react';
+import CardProductDetail from '../../components/CardProductDetail/CardProductDetail';
+import { getAll } from '../../utilities/products-api';
 
-export default function NewOrderPage({ user, setUser }) {
-  const [menuItems, setMenuItems] = useState([]);
-  const [activeCat, setActiveCat] = useState('');
-  const [cart, setCart] = useState(null);
-  const categoriesRef = useRef([]);
-  const navigate = useNavigate();
+const ShopGlasswarePage = () => {
+  const [glasswareProducts, setGlasswareProducts] = useState([]);
 
-  // The empty dependency array causes the effect
-  // to run ONLY after the FIRST render
-  useEffect(function() {
-    async function getItems() {
-      const items = await productsAPI.getAll();
-      categoriesRef.current = [...new Set(items.map(item => item.category.name))];
-      setMenuItems(items);
-      setActiveCat(categoriesRef.current[0]);
-    }
-    getItems();
+  useEffect(() => {
+    const fetchGlasswareProducts = async () => {
+      try {
+        const allProducts = await getAll();
+        const glasswareProducts = allProducts.filter(product => product.category === 'Glassware');
+        setGlasswareProducts(glasswareProducts);
+      } catch (error) {
+        console.error('Error fetching glassware products:', error);
+      }
+    };
 
-    // Load cart (a cart is the unpaid order for the logged in user)
-    async function getCart() {
-      const cart = await ordersAPI.getCart();
-      setCart(cart);
-    }
-    getCart();
+    fetchGlasswareProducts();
   }, []);
 
-  /*--- Event Handlers ---*/
-  async function handleAddToOrder(itemId) {
-    // 1. Call the addItemToCart function in ordersAPI, passing to it the itemId, and assign the resolved promise to a variable named cart.
-    const updatedCart = await ordersAPI.addItemToCart(itemId);
-    // 2. Update the cart state with the updated cart received from the server
-    setCart(updatedCart);
-  }
-
-  async function handleChangeQty(itemId, newQty) {
-    const updatedCart = await ordersAPI.setItemQtyInCart(itemId, newQty);
-    setCart(updatedCart);
-  }
-
-  async function handleCheckout() {
-    await ordersAPI.checkout();
-    navigate('/orders');
-  }
-
-
   return (
-    <main className="NewOrderPage">
-      <aside>
-        <Logo />
-        <CategoryList
-          categories={categoriesRef.current}
-          activeCat={activeCat}
-          setActiveCat={setActiveCat}
-        />
-        <Link to="/orders" className="button btn-sm">PREVIOUS ORDERS</Link>
-        <UserLogOut user={user} setUser={setUser} />
-      </aside>
-      <MenuList
-        menuItems={menuItems.filter(item => item.category.name === activeCat)}
-        handleAddToOrder={handleAddToOrder}
-      />
-      <OrderDetail
-        order={cart}
-        handleChangeQty={handleChangeQty}
-        handleCheckout={handleCheckout}
-      />
-    </main>
+    <div className='ShopGlasswarePage'>
+      <h2>Shop Glassware</h2>
+      <div className='product-gallery'>
+        {glasswareProducts.map(product => (
+          <CardProductDetail key={product.id} product={product} />
+        ))}
+      </div>
+    </div>
   );
-}
+};
+
+export default ShopGlasswarePage;
