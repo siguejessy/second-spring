@@ -50,6 +50,7 @@ async function update(req, res) {
         product.category = req.body.category;
         product.subCategory = req.body.subCategory;
         product.tags = req.body.tags;
+        product.description = req.body.description;
         product.price = req.body.price;
 
         const updatedProduct = await product.save();

@@ -6,6 +6,7 @@ const productSchema = new Schema({
   category: {type: Schema.Types.ObjectId, ref: 'Category'},
   subCategory: {type: Schema.Types.ObjectId, ref: 'SubCategory'},
   tags: [{type: Schema.Types.ObjectId, ref: 'Tag'}],
+  description: { type: String, required: true },
   price: { type: Number, required: true }
 }, {
   timestamps: true
