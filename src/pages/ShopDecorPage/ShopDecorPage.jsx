@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import * as productsAPI from '../../utilities/products-api';
+import * as productsAPI from '../../utilities/products-service';
 import './ShopDecorPage.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../components/Logo/Logo';

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import CardProductDetail from '../../components/CardProductDetail/CardProductDetail';
-import { getAll, getProductsByName } from '../../controllers/api/products';
 import { getUser } from '../../utilities/users-service';
 
 const AdminProfilePage = () => {
@@ -11,17 +10,15 @@ const AdminProfilePage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const userProducts = await getAll(); // Fetch all products from the controller
-        setProducts(userProducts);
+        const fetchedProducts = await getProductsByIds(user.products); // Fetch products by IDs using index function
+        setProducts(fetchedProducts);
       } catch (error) {
         console.error('Error fetching user products:', error);
       }
     };
 
     fetchProducts();
-  }, []);
-
-  const filteredProducts = products.filter(product => product.created_by === user._id); // Filter products based on user ID
+  }, [user.products]); // Add user.products to the dependency array
 
   return (
     <main className='AdminProfilePage'>
@@ -33,8 +30,8 @@ const AdminProfilePage = () => {
       </div>
       <div>
         <button>View My Catalogue</button>
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map(product => (
+        {products.length > 0 ? (
+          products.map(product => (
             <div key={product._id}>
               <CardProductDetail product={product} />
               {/* Add delete and update functionality as needed */}
