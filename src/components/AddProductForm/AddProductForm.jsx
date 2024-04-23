@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./AddProductForm.css";
 import { createProduct } from '../../utilities/products-api';
-import { getAllCategories, getAllTags, getSubCategoriesByCategoryId } from '../../utilities/categories-api';
+import { getAllCategories, getCategoryById, getCategoryByName getSubCategoriesByCategoryId } from '../../utilities/categories-api';
 
 const AddProductForm = () => {
   const [productData, setProductData] = useState({
@@ -13,7 +13,11 @@ const AddProductForm = () => {
     price: '',
     tags: [],
   });
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([
+    { _id: 'default1', name: 'Book' },
+    { _id: 'default2', name: 'Decor' },
+    { _id: 'default3', name: 'Glassware' }
+  ]);
   const [subCategories, setSubCategories] = useState([]);
   const [tags, setTags] = useState([]);
 
@@ -21,7 +25,7 @@ const AddProductForm = () => {
     const fetchCategoriesAndTags = async () => {
       try {
         const categoriesData = await getAllCategories();
-        setCategories(categoriesData);
+        setCategories([...categories, ...categoriesData]);
         const tagsData = await getAllTags();
         setTags(tagsData);
       } catch (error) {
@@ -86,9 +90,6 @@ const AddProductForm = () => {
         <label>Category:</label>
         <select name="category" value={productData.category} onChange={handleCategoryChange}>
           <option value="">Select category...</option>
-          <option value="book">Book</option>
-          <option value="decor">Decor</option>
-          <option value="glassware">Glassware</option>
           {categories.map(category => (
             <option key={category._id} value={category._id}>{category.name}</option>
           ))}
@@ -98,11 +99,6 @@ const AddProductForm = () => {
         <label>Sub-category:</label>
         <select name="subCategory" value={productData.subCategory} onChange={handleSubCategoryChange}>
           <option value="">Select sub-category...</option>
-          <option value="art">Art</option>
-          <option value="furniture">Furniture</option>
-          <option value="mirror">Mirror</option>
-          <option value="serving-set">Serving Set</option>
-          <option value="vase">Vase</option>
           {subCategories.map(subCategory => (
             <option key={subCategory._id} value={subCategory._id}>{subCategory.name}</option>
           ))}
@@ -126,7 +122,11 @@ const AddProductForm = () => {
       </div>
       <div>
         <label>Tags:</label>
-        <input type="text" name="tags" value={productData.tags} onChange={handleChange} />
+        <select multiple name="tags" value={productData.tags} onChange={handleTagChange}>
+          {tags.map(tag => (
+            <option key={tag._id} value={tag.name}>{tag.name}</option>
+          ))}
+        </select>
         <p>Enter tags separated by commas (e.g., example-of-tag, second-example, another, another-tag)</p>
       </div>
       <button type="submit">Add Product</button>

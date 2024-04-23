@@ -3,7 +3,7 @@ import * as productsAPI from '../../utilities/products-api';
 import './ShopDecorPage.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../components/Logo/Logo';
-import CategoryList from '../../components/CategoryList/CategoryList';
+import CategoryList from '../../components/CategoryManagement/CategoryManagement';
 import UserLogOut from '../../components/UserLogOut/UserLogOut';
 import ProductDetail from '../../components/ProductDetail/ProductDetail'; // Import your product detail component
 

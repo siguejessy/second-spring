@@ -12,16 +12,20 @@ const AdminProfilePage = () => {
     const fetchProducts = async () => {
       try {
         const allProducts = await getAll();
-        // Filter products based on the created_by field
-        const userProducts = allProducts.filter(product => product.created_by === user.id);
-        setProducts(userProducts);
+        if (Array.isArray(allProducts)) {
+          // Filter products based on the created_by field
+          const userProducts = allProducts.filter(product => product.created_by === user.id);
+          setProducts(userProducts);
+        } else {
+          console.error('Error fetching user products:', allProducts);
+        }
       } catch (error) {
         console.error('Error fetching user products:', error);
       }
     };
 
     fetchProducts();
-  }, [user.id]); //
+  }, [user.id]);
 
   return (
     <main className='AdminProfilePage'>
@@ -33,12 +37,16 @@ const AdminProfilePage = () => {
       </div>
       <div>
         <button>View My Catalogue</button>
-        {products.map(product => (
-          <div key={product.id}>
-            <CardProductDetail product={product} />
-            {/* Add delete and update functionality as needed */}
-          </div>
-        ))}
+        {products.length > 0 ? (
+          products.map(product => (
+            <div key={product.id}>
+              <CardProductDetail product={product} />
+              {/* Add delete and update functionality as needed */}
+            </div>
+          ))
+        ) : (
+          <div>No products available</div>
+        )}
       </div>
     </main>
   );

@@ -16,6 +16,7 @@ import AuthPage from '../AuthPage/AuthPage';
 import { getUser } from '../../utilities/users-service';
 import AddProductForm from '../../components/AddProductForm/AddProductForm';
 
+
 export default function App() {
   const [user, setUser] = useState(getUser());
   const location = useLocation();

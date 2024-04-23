@@ -1,12 +1,14 @@
 import sendRequest from './send-request';
 
-export async function getAll() {
+
+const BASE_URL = "/api/products";
+
+export async function index() {
   try {
-    const response = await sendRequest('/api/products');
-    return response;
+  return sendRequest(BASE_URL);
   } catch (error) {
-    console.error('Error fetching all products:', error.message);
-    throw new Error('Failed to fetch all products');
+    console.error("Error fetching products:", error.message);
+    throw new Error("Failed to fetch products");
   }
 }
 

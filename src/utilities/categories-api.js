@@ -40,6 +40,67 @@ export async function getSubCategoriesByCategoryId(categoryId) {
   }
 }
 
+export async function addCategory(categoryName) {
+  try {
+    const response = await sendRequest('/api/categories', 'POST', { name: categoryName });
+    return response;
+  } catch (error) {
+    console.error('Error adding category:', error.message);
+    throw new Error('Failed to add category');
+  }
+}
+
+export async function updateCategory(categoryId, categoryName) {
+  try {
+    const response = await sendRequest(`/api/categories/${categoryId}`, 'PUT', { name: categoryName });
+    return response;
+  } catch (error) {
+    console.error(`Error updating category with ID ${categoryId}:`, error.message);
+    throw new Error(`Failed to update category with ID ${categoryId}`);
+  }
+}
+
+export async function deleteCategory(categoryId) {
+  try {
+    const response = await sendRequest(`/api/categories/${categoryId}`, 'DELETE');
+    return response;
+  } catch (error) {
+    console.error(`Error deleting category with ID ${categoryId}:`, error.message);
+    throw new Error(`Failed to delete category with ID ${categoryId}`);
+  }
+}
+
+export async function addSubCategory(subCategoryName, categoryId) {
+  try {
+    const response = await sendRequest('/api/subcategories', 'POST', { name: subCategoryName, category: categoryId });
+    return response;
+  } catch (error) {
+    console.error('Error adding sub-category:', error.message);
+    throw new Error('Failed to add sub-category');
+  }
+}
+
+export async function updateSubCategory(subCategoryId, subCategoryName) {
+  try {
+    const response = await sendRequest(`/api/subcategories/${subCategoryId}`, 'PUT', { name: subCategoryName });
+    return response;
+  } catch (error) {
+    console.error(`Error updating sub-category with ID ${subCategoryId}:`, error.message);
+    throw new Error(`Failed to update sub-category with ID ${subCategoryId}`);
+  }
+}
+
+export async function deleteSubCategory(subCategoryId) {
+  try {
+    const response = await sendRequest(`/api/subcategories/${subCategoryId}`, 'DELETE');
+    return response;
+  } catch (error) {
+    console.error(`Error deleting sub-category with ID ${subCategoryId}:`, error.message);
+    throw new Error(`Failed to delete sub-category with ID ${subCategoryId}`);
+  }
+}
+
+
 export async function getAllTags() {
   try {
     const response = await sendRequest('/api/tags');
