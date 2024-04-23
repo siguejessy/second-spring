@@ -1,7 +1,7 @@
-import './ProductDetail.css';
+import './CardProductDetail.css';
 import React from 'react';
 
-const ProductDetail = ({ product }) => {
+const CardProductDetail = ({ product }) => {
   return (
     <div className="product">
       <h2>{product.name}</h2>
@@ -13,4 +13,4 @@ const ProductDetail = ({ product }) => {
   );
 };
 
-export default ProductDetail;
+export default CardProductDetail;
