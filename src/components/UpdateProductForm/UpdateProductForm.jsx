@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './UpdateProductForm.css';
-import { getProductById, updateProduct } from '../../utilities/products-api';
+import { updateProduct } from '../../utilities/products-api';
 import { useNavigate } from 'react-router-dom';
+import { getProductById } from '../../utilities/products-api';
 
 const UpdateProductForm = ({ productId }) => {
   const [productData, setProductData] = useState({
@@ -40,10 +41,9 @@ const UpdateProductForm = ({ productId }) => {
       navigate(`/products/${productId}`);
     } catch (error) {
       console.error('Error updating product:', error);
-      // Handle error, show a message to the user, or trigger a retry
     }
   };
-
+  
   return (
     <div>
       <h1>Update Product</h1>

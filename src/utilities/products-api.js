@@ -35,14 +35,17 @@ export async function deleteProduct(productId) {
 
 export async function updateProduct(product) {
   try {
-    console.log(product, "api");
-    return sendRequest(`${BASE_URL}/${product.id}`, "PUT", product);
+    const response = await sendRequest(`${BASE_URL}/${product.id}`, "PUT", product);
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error(`Failed to update product: ${response.statusText}`);
+    }
   } catch (error) {
     console.error("Error updating product:", error.message);
     throw new Error("Failed to update product");
   }
 }
-
 export async function getProductById(productId) {
   try {
     return sendRequest(`${BASE_URL}/${productId}`);

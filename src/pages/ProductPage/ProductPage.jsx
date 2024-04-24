@@ -34,7 +34,6 @@ const ProductPage = () => {
   const handleDelete = async () => {
     try {
       await deleteProduct(id);
-      // Redirect or display a success message
       navigate('/products');
     } catch (error) {
       console.error('Error deleting product:', error);
@@ -42,7 +41,6 @@ const ProductPage = () => {
   };
 
   const handleUpdate = () => {
-    // Show the update form
     setShowUpdateForm(true);
   };
 
@@ -58,7 +56,7 @@ const ProductPage = () => {
           <p>Category: {product.category}</p>
           <p>Subcategory: {product.subCategory}</p>
           <p>Description: {product.description}</p>
-          <p>Price: {product.price}</p>
+          <p>Price: ${product.price}</p>
           {isAdmin && (
             <div>
               <button onClick={handleDelete}>Delete this product</button>

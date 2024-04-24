@@ -8,7 +8,7 @@ const Product = require('../../models/productSchema');
 router.get('/', productsCtrl.getAll);
 router.post('/new', productsCtrl.createProduct, ensureLoggedIn);
 router.delete('/:id', productsCtrl.deleteProduct);
-router.put('/:id', productsCtrl.updateProduct);
+router.put('/:id', productsCtrl.updateProduct, ensureLoggedIn);
 
 router.get('/:id', async (req, res) => {
   try {

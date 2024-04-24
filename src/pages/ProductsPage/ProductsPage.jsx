@@ -1,6 +1,5 @@
-// ProductsPage.jsx
 import React, { useState, useEffect } from 'react';
-import { index } from '../../utilities/products-api'; // Import the index function
+import { index } from '../../utilities/products-api';
 import CardProductDetail from '../../components/CardProductDetail/CardProductDetail';
 import GoBackButton from '../../components/GoBackBtn/GoBackBtn';
 
@@ -12,7 +11,7 @@ const ProductsPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const fetchedProducts = await index(); // Use the index function to fetch all products
+        const fetchedProducts = await index();
         setProducts(fetchedProducts);
         setLoading(false);
       } catch (error) {
@@ -27,16 +26,14 @@ const ProductsPage = () => {
 
   return (
     <div>
-     <div>
-    <GoBackButton />
-    </div>
+      <GoBackButton />
       <h1>All Products</h1>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       <div className="product-list">
         {!loading && !error && (
           products.map(product => (
-            <CardProductDetail key={product._id} product={product} />
+            <CardProductDetail key={product._id} product={product}/>
           ))
         )}
       </div>
@@ -45,4 +42,3 @@ const ProductsPage = () => {
 };
 
 export default ProductsPage;
-

@@ -27,16 +27,15 @@ async function createProduct(req, res) {
     res.status(500).json({ message: 'Server Error' });
   }
 }
-
-  async function updateProduct(req, res) {
-    try{
-        const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, {new: true});
-        res.json(updatedProduct);
-        res.status(200).json({ message: 'Product updated successfully' });
-    }catch (err){
-        res.json(err);
-    }
+async function updateProduct(req, res) {
+  try {
+      const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      res.status(200).json({ message: 'Product updated successfully', updatedProduct });
+  } catch (err) {
+      res.status(500).json({ error: 'Failed to update product', message: err.message });
+  }
 }
+
 
 async function deleteProduct(req, res) {
     try {
