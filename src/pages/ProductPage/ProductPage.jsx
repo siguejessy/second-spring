@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getProductById, deleteProduct } from '../../utilities/products-api';
 import { getUser } from '../../utilities/users-service';
 
@@ -7,7 +7,8 @@ const ProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [user, setUser] = useState(null);
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -31,6 +32,7 @@ const ProductPage = () => {
     try {
       await deleteProduct(id);
       // Redirect or display a success message
+      navigate('/products');
     } catch (error) {
       console.error('Error deleting product:', error);
     }
