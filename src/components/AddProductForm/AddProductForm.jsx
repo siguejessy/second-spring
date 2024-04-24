@@ -7,6 +7,7 @@ import { Navigate } from 'react-router-dom';
 const defaultEmojis = {
   '📚': 'Book',
   '🏠': 'Decor',
+  '🖼️': 'Decor',
   '🥂': 'Glassware',
   '🆕': 'New Category',
   '🪑': 'Chair',
@@ -14,9 +15,9 @@ const defaultEmojis = {
   '🏺': 'Vase',
   '🪞': 'Mirror',
   '🛋️': 'Sofa',
-  '🍷': 'Wine',
-  '🍸': 'Cocktail',
-  '🥃': 'Whiskey',
+  '🍷': 'Wine & Cocktail glass',
+  '🍸': 'Martini glass',
+  '🥃': 'Rocks glass',
 };
 
 
@@ -57,8 +58,8 @@ const AddProductForm = () => {
         description: productData.description,
         price: productData.price,
         tags: productData.tags,
-        // photo: productData.photo, // This is a placeholder for now icebox-photo-upload
       };
+      // photo: productData.photo, // This is a placeholder for now icebox-photo-upload
   
       const createdProduct = await createProduct(newProduct);
       console.log('Product added successfully');
@@ -87,14 +88,11 @@ const AddProductForm = () => {
           {Object.keys(defaultEmojis).map((emoji, index) => (
             <option key={index} value={emoji}>{emoji} {defaultEmojis[emoji]}</option>
           ))}
+          <option value="New Emoji">New Emoji {defaultEmojis['New Emoji']}</option>
         </select>
-        <input 
-          type="text" 
-          name="newEmoji" 
-          value={newEmoji} 
-          placeholder="Enter custom emoji" 
-          onChange={handleChange} 
-        />
+        {productData.emoji === "New Emoji" && (
+          <input type="text" name="newEmoji" value={productData.newEmoji} onChange={handleChange} />
+        )}
       </div>
       <div>
         <label>Category:</label>
@@ -122,10 +120,10 @@ const AddProductForm = () => {
           <input type="text" name="newSubCategory" value={productData.newSubCategory} onChange={handleChange} />
         )}
       </div>
-      <div>
+      {/* <div>
         <label>Product Photo:</label>
-        <input type="file" name="photo" onChange={handleChange} accept="image/*" />
-      </div>
+        <input type="file" name="photo" onChange={handleChange} accept="image/*" /> / icebox-photo-upload
+      </div> */}
       <div>
         <label>Description:</label>
         <input type="text" name="description" value={productData.description} onChange={handleChange} />
