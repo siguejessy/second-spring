@@ -13,7 +13,6 @@
 // If any changes are made to the models, 
 // exit the REPL and reload this module
 
-
 // Connect to the database
 require('dotenv').config();
 require('./config/database');
@@ -26,7 +25,11 @@ const Inquiry = require('./models/inquirySchema')
 
 // Local variables will come in handy for holding retrieved documents
 let user, customer, product, category, admin, inquiry;
-let users, products, categories, customers, admins, inquiries;
+let users,categories, customers, admins, inquiries;
 
-let products = await Product.find({});
-console.log(products);
+async function fetchProducts() {
+  let products = await Product.find({});
+  console.log(products);
+}
+
+fetchProducts();

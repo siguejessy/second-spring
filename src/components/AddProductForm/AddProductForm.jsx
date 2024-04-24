@@ -1,8 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import "./AddProductForm.css";
-import { createProduct } from '../../utilities/products-api';
-import { getCategoryByName, getSubCategoriesByCategoryId } from '../../utilities/categories-api';
-import { redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import { createProduct }from '../../utilities/products-api';
+import './AddProductForm.css';
+import { Navigate } from 'react-router-dom';
+
+
+const defaultEmojis = {
+  '📚': 'Book',
+  '🏠': 'Decor',
+  '🥂': 'Glassware',
+  '🆕': 'New Category',
+  '🪑': 'Chair',
+  '🎨': 'Art',
+  '🏺': 'Vase',
+  '🪞': 'Mirror',
+  '🛋️': 'Sofa',
+  '🍷': 'Wine',
+  '🍸': 'Cocktail',
+  '🥃': 'Whiskey',
+};
+
 
 const AddProductForm = () => {
   const [productData, setProductData] = useState({
@@ -13,90 +29,115 @@ const AddProductForm = () => {
     description: '',
     price: '',
     tags: [],
+    // photo: null, //icebox-photo-upload
   });
-  const [categories, setCategories] = useState([]);
-  const [subCategories, setSubCategories] = useState([]);
-  const [redirectToProfile, setRedirectToProfile] = useState(false);
+  const [redirectToProduct, setRedirectToProduct] = useState(null);
+  const [newEmoji, setNewEmoji] = useState('');
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const categoriesData = await getCategoryByName();
-        setCategories(categoriesData);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
-
-  const handleCategoryChange = async (e) => {
-    const selectedCategoryName = e.target.value;
-    try {
-      const category = await getCategoryByName(selectedCategoryName);
-      setProductData({
-        ...productData,
-        category: category._id,
-        subCategory: '', // Reset sub-category when category changes
-      });
-      const subCategoriesData = await getSubCategoriesByCategoryId(category._id);
-      setSubCategories(subCategoriesData);
-    } catch (error) {
-      console.error('Error fetching category or sub-categories:', error);
+  const handleChange = (e) => {
+    if (e.target.name === 'photo') {
+      setProductData({ ...productData, photo: e.target.files[0] });
+    } else if (e.target.name === 'emoji') {
+      setProductData({ ...productData, emoji: e.target.value });
+    } else if (e.target.name === 'newEmoji') {
+      setNewEmoji(e.target.value);
+    } else {
+      setProductData({ ...productData, [e.target.name]: e.target.value });
     }
   };
 
-  const handleChange = (e) => {
-    setProductData({ ...productData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
     try {
-      await createProduct(productData);
+      const newProduct = {
+        name: productData.name,
+        emoji: productData.emoji,
+        category: productData.category,
+        subCategory: productData.subCategory,
+        description: productData.description,
+        price: productData.price,
+        tags: productData.tags,
+        // photo: productData.photo, // This is a placeholder for now icebox-photo-upload
+      };
+  
+      const createdProduct = await createProduct(newProduct);
       console.log('Product added successfully');
-      setProductData({
-        name: '',
-        emoji: '',
-        category: '',
-        subCategory: '',
-        description: '',
-        price: '',
-        tags: [],
-      });
-      // Redirect to admin profile page after adding the product
-      setRedirectToProfile(true);
+  
+      // Redirect to the newly created product's page
+      setRedirectToProduct(`/products/${createdProduct._id}`);
     } catch (error) {
       console.error('Error adding product:', error);
     }
   };
-
-  if (redirectToProfile) {
-    return <redirect to="/profile" />;
+  
+  if (redirectToProduct) {
+    return <Navigate to={redirectToProduct} replace={true} />;
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Category:</label>
-        <select name="category" value={productData.category} onChange={handleCategoryChange}>
-          <option value="">Select category...</option>
-          {categories.map(category => (
-            <option key={category._id} value={category.name}>{category.name}</option>
+        <label>Name:</label>
+        <input type="text" name="name" value={productData.name} onChange={handleChange} />
+      </div>
+      <div>
+        <label>Emoji:</label>
+        <select name="emoji" value={productData.emoji} onChange={handleChange}>
+          <option value="">Select emoji...</option>
+          {Object.keys(defaultEmojis).map((emoji, index) => (
+            <option key={index} value={emoji}>{emoji} {defaultEmojis[emoji]}</option>
           ))}
         </select>
+        <input 
+          type="text" 
+          name="newEmoji" 
+          value={newEmoji} 
+          placeholder="Enter custom emoji" 
+          onChange={handleChange} 
+        />
+      </div>
+      <div>
+        <label>Category:</label>
+        <select name="category" value={productData.category} onChange={handleChange}>
+          <option value="Book">Book {defaultEmojis.Book}</option>
+          <option value="Decor">Decor {defaultEmojis.Decor}</option>
+          <option value="Glassware">Glassware {defaultEmojis.Glassware}</option>
+          <option value="New Category">New Category {defaultEmojis['New Category']}</option>
+        </select>
+        {productData.category === "New Category" && (
+          <input type="text" name="newCategory" value={productData.newCategory} onChange={handleChange} />
+        )}
       </div>
       <div>
         <label>Sub-category:</label>
         <select name="subCategory" value={productData.subCategory} onChange={handleChange}>
-          <option value="">Select sub-category...</option>
-          {subCategories.map(subCategory => (
-            <option key={subCategory._id} value={subCategory._id}>{subCategory.name}</option>
-          ))}
+          <option value="Furniture">Furniture {defaultEmojis.Furniture}</option>
+          <option value="Vases">Vases {defaultEmojis.Vases}</option>
+          <option value="Serving Sets">Serving Sets {defaultEmojis['Serving Sets']}</option>
+          <option value="Art">Art {defaultEmojis.Art}</option>
+          <option value="Mirrors">Mirrors {defaultEmojis.Mirrors}</option>
+          <option value="New Subcategory">New Subcategory {defaultEmojis['New Subcategory']}</option>
         </select>
+        {productData.subCategory === "New Subcategory" && (
+          <input type="text" name="newSubCategory" value={productData.newSubCategory} onChange={handleChange} />
+        )}
       </div>
-      {/* Other input fields */}
+      <div>
+        <label>Product Photo:</label>
+        <input type="file" name="photo" onChange={handleChange} accept="image/*" />
+      </div>
+      <div>
+        <label>Description:</label>
+        <input type="text" name="description" value={productData.description} onChange={handleChange} />
+      </div>
+      <div>
+        <label>Price:</label>
+        <input type="number" name="price" value={productData.price} onChange={handleChange} />
+      </div>
+      <div>
+        <label>Tags:</label>
+        <input type="text" name="tags" value={productData.tags} onChange={handleChange} placeholder="comma-separated tags" />
+      </div>
       <button type="submit">Add Product</button>
     </form>
   );

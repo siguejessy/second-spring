@@ -11,9 +11,9 @@ export async function index() {
   }
 }
 
-export async function display() {
+export async function display(productId) {
   try {
-    return sendRequest(`${BASE_URL}/product`);
+    return sendRequest(`${BASE_URL}/${productId}`);
   } catch (error) {
     console.error("Error displaying product:", error.message);
     throw new Error("Failed to display product");
@@ -21,12 +21,7 @@ export async function display() {
 }
 
 export async function createProduct(product) {
-  try {
-    return sendRequest(`${BASE_URL}/new`, "POST", product);
-  } catch (error) {
-    console.error("Error creating product:", error.message);
-    throw new Error("Failed to create product");
-  }
+  return sendRequest(`${BASE_URL}/new`, 'POST', product);
 }
 
 export async function deleteProduct(productId) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CardProductDetail from '../../components/CardProductDetail/CardProductDetail';
 import { getUser } from '../../utilities/users-service';

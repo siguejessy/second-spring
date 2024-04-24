@@ -2,7 +2,7 @@ require('dotenv').config();
 require('./config/database');
 
 const Product = require('./models/productSchema');
-const data = require('./data/data');
+const data = require('./data/data.js');
 
 const defaultProducts = [
   {

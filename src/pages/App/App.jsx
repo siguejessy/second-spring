@@ -9,8 +9,7 @@ import ShopBooksPage from '../ShopBooksPage/ShopBooksPage';
 import ShopDecorPage from '../ShopDecorPage/ShopDecorPage';
 import ShopGlasswarePage from '../ShopGlasswarePage/ShopGlasswarePage';
 import ProductPage from '../ProductPage/ProductPage';
-import AboutPage from '../AboutPage/AboutPage';
-import * as categories from '../../utilities/categories-api';
+import AboutPage from '../AboutPage/AboutPage'; 
 import AuthPage from '../AuthPage/AuthPage';
 import { getUser } from '../../utilities/users-service';
 import AddProductForm from '../../components/AddProductForm/AddProductForm';
@@ -23,15 +22,13 @@ export default function App() {
   useEffect(() => {
     // Force a re-render whenever the location changes
   }, [location]);
-
+ 
   return (
     <>
       <main className="App">
         <NavBar
           user={user}
           setUser={setUser}
-          // products={}
-          categories={categories.getAllCategories}
         />
         <Routes>
           <Route path="/" element={<Navigate to="/shop" />} />

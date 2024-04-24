@@ -3,6 +3,7 @@ import AddProductForm from '../../components/AddProductForm/AddProductForm';
 import { getUser } from '../../utilities/users-service';
 import './AddProductPage.css';
 
+
 const AddProductPage = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
