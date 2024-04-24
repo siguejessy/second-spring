@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import "./AddProductForm.css";
 import { createProduct } from '../../utilities/products-api';
-import { getAllCategories, getSubCategoriesByCategoryId, getAllTags } from '../../utilities/categories-api';
+import { getCategoryByName, getSubCategoriesByCategoryId } from '../../utilities/categories-api';
+import { redirect } from 'react-router-dom';
 
 const AddProductForm = () => {
   const [productData, setProductData] = useState({
@@ -13,52 +14,37 @@ const AddProductForm = () => {
     price: '',
     tags: [],
   });
-  const [categories, setCategories] = useState([
-    { _id: 'default1', name: 'Book' },
-    { _id: 'default2', name: 'Decor' },
-    { _id: 'default3', name: 'Glassware' }
-  ]);
+  const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
-  const [tags, setTags] = useState([]);
+  const [redirectToProfile, setRedirectToProfile] = useState(false);
 
   useEffect(() => {
-    const fetchCategoriesAndTags = async () => {
+    const fetchCategories = async () => {
       try {
-        const categoriesData = await getAllCategories();
-        setCategories([...categories, ...categoriesData]);
-        const tagsData = await getAllTags();
-        setTags(tagsData);
+        const categoriesData = await getCategoryByName();
+        setCategories(categoriesData);
       } catch (error) {
-        console.error('Error fetching categories and tags:', error);
+        console.error('Error fetching categories:', error);
       }
     };
 
-    fetchCategoriesAndTags();
+    fetchCategories();
   }, []);
 
   const handleCategoryChange = async (e) => {
-    const selectedCategory = e.target.value;
-    setProductData({
-      ...productData,
-      category: selectedCategory,
-      subCategory: '', // Reset sub-category when category changes
-    });
-
+    const selectedCategoryName = e.target.value;
     try {
-      const subCategoriesData = await getSubCategoriesByCategoryId(selectedCategory);
+      const category = await getCategoryByName(selectedCategoryName);
+      setProductData({
+        ...productData,
+        category: category._id,
+        subCategory: '', // Reset sub-category when category changes
+      });
+      const subCategoriesData = await getSubCategoriesByCategoryId(category._id);
       setSubCategories(subCategoriesData);
     } catch (error) {
-      console.error('Error fetching sub-categories:', error);
+      console.error('Error fetching category or sub-categories:', error);
     }
-  };
-
-  const handleSubCategoryChange = (e) => {
-    setProductData({ ...productData, subCategory: e.target.value });
-  };
-
-  const handleTagChange = (e) => {
-    const selectedTags = Array.from(e.target.selectedOptions, option => option.value);
-    setProductData({ ...productData, tags: selectedTags });
   };
 
   const handleChange = (e) => {
@@ -79,10 +65,16 @@ const AddProductForm = () => {
         price: '',
         tags: [],
       });
+      // Redirect to admin profile page after adding the product
+      setRedirectToProfile(true);
     } catch (error) {
       console.error('Error adding product:', error);
     }
   };
+
+  if (redirectToProfile) {
+    return <redirect to="/profile" />;
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -91,44 +83,20 @@ const AddProductForm = () => {
         <select name="category" value={productData.category} onChange={handleCategoryChange}>
           <option value="">Select category...</option>
           {categories.map(category => (
-            <option key={category._id} value={category._id}>{category.name}</option>
+            <option key={category._id} value={category.name}>{category.name}</option>
           ))}
         </select>
       </div>
       <div>
         <label>Sub-category:</label>
-        <select name="subCategory" value={productData.subCategory} onChange={handleSubCategoryChange}>
+        <select name="subCategory" value={productData.subCategory} onChange={handleChange}>
           <option value="">Select sub-category...</option>
           {subCategories.map(subCategory => (
             <option key={subCategory._id} value={subCategory._id}>{subCategory.name}</option>
           ))}
         </select>
       </div>
-      <div>
-        <label>Name:</label>
-        <input type="text" name="name" value={productData.name} onChange={handleChange} />
-      </div>
-      <div>
-        <label>Emoji:</label>
-        <input type="text" name="emoji" value={productData.emoji} onChange={handleChange} />
-      </div>
-      <div>
-        <label>Description:</label>
-        <textarea rows="3" cols="35" name="description" value={productData.description} onChange={handleChange} />
-      </div>
-      <div>
-        <label>Price:</label>
-        <input type="number" name="price" value={productData.price} onChange={handleChange} />
-      </div>
-      <div>
-        <label>Tags:</label>
-        <select multiple name="tags" value={productData.tags} onChange={handleTagChange}>
-          {tags.map(tag => (
-            <option key={tag._id} value={tag.name}>{tag.name}</option>
-          ))}
-        </select>
-        <p>Enter tags separated by commas (e.g., example-of-tag, second-example, another, another-tag)</p>
-      </div>
+      {/* Other input fields */}
       <button type="submit">Add Product</button>
     </form>
   );

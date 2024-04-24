@@ -7,18 +7,18 @@ const AdminProfilePage = () => {
   const [products, setProducts] = useState([]);
   const user = getUser();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const fetchedProducts = await getProductsByIds(user.products); // Fetch products by IDs using index function
-        setProducts(fetchedProducts);
-      } catch (error) {
-        console.error('Error fetching user products:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const fetchedProducts = await getProductsByIds(user.products); // Fetch products by IDs using index function
+  //       setProducts(fetchedProducts);
+  //     } catch (error) {
+  //       console.error('Error fetching user products:', error);
+  //     }
+  //   };
 
-    fetchProducts();
-  }, [user.products]); // Add user.products to the dependency array
+  //   fetchProducts();
+  // }, [user.products]); // Add user.products to the dependency array
 
   return (
     <main className='AdminProfilePage'>

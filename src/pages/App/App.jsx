@@ -30,7 +30,7 @@ export default function App() {
         <NavBar
           user={user}
           setUser={setUser}
-          products={getAll}
+          // products={}
           categories={categories.getAllCategories}
         />
         <Routes>

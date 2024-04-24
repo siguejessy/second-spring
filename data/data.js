@@ -1,8 +1,5 @@
-require('dotenv').config();
-require('./config/database');
-
-const Product = require('./models/productSchema');
-const data = require('./data/data');
+const { type } = require("@testing-library/user-event/dist/type");
+const Product = require('../models/productSchema');
 
 const defaultProducts = [
   {

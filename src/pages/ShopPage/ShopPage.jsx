@@ -1,10 +1,9 @@
 import './ShopPage.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../components/Logo/Logo';
-
 import UserLogOut from '../../components/UserLogOut/UserLogOut';
 
-export default function ShopAllPage({ user, setUser }) {
+export default function ShopPage({ user, setUser }) {
   const navigate = useNavigate();
 
   return (

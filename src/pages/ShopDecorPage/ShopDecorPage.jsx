@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import * as productsAPI from '../../utilities/products-service';
 import './ShopDecorPage.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../components/Logo/Logo';
@@ -12,19 +11,19 @@ export default function ShopDecorPage({ user, setUser }) {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const fetchedProducts = await productsAPI.getAll();
-        const decorProducts = fetchedProducts.filter(product => product.category.name === 'Decor');
-        setProducts(decorProducts);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    }
+  // useEffect(() => {
+  //   async function fetchProducts() {
+  //     try {
+  //       // const fetchedProducts = await productsAPI.getAll();
+  //       const decorProducts = fetchedProducts.filter(product => product.category.name === 'Decor');
+  //       setProducts(decorProducts);
+  //     } catch (error) {
+  //       console.error('Error fetching products:', error);
+  //     }
+  //   }
 
-    fetchProducts();
-  }, []);
+  //   fetchProducts();
+  // }, []);
 
   return (
     <main className="ShopDecorPage">
