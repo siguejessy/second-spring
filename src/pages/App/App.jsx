@@ -13,6 +13,7 @@ import AboutPage from '../AboutPage/AboutPage';
 import AuthPage from '../AuthPage/AuthPage';
 import { getUser } from '../../utilities/users-service';
 import AddProductForm from '../../components/AddProductForm/AddProductForm';
+import ProductsPage from '../ProductsPage/ProductsPage';
 
 
 export default function App() {
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="search/:query" element={<SearchPage />} /> */}
           <Route path="/profile" element={<ProfilePage user={user} setUser={setUser} />} />
           <Route path="/profile/inquiries" element={<InquiriesPage user={user} />} />
+          <Route path="/products" element={<ProductsPage user={user} setUser={setUser} />} />
           <Route path="/products/:id" element={<ProductPage user={user} setUser={setUser} />} />
           <Route path="/products/new" element={<AddProductForm />} />
          <Route path="/about" element={<AboutPage />} />
