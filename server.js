@@ -34,6 +34,8 @@ app.use('/api/inquiries', ensureLoggedIn, require('./routes/api/inquiries'));
 
 
 
+
+
 // The following "catch all" route (note the *) is necessary
 // to return the index.html on all non-AJAX/API requests
 app.get('/*', function(req, res) {

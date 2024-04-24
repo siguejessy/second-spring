@@ -42,3 +42,12 @@ export async function updateProduct(product) {
     throw new Error("Failed to update product");
   }
 }
+
+export async function getProductById(productId) {
+  try {
+    return sendRequest(`${BASE_URL}/${productId}`);
+  } catch (error) {
+    console.error("Error fetching product by ID:", error.message);
+    throw new Error("Failed to fetch product by ID");
+  }
+}
