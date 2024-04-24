@@ -136,7 +136,7 @@ const AddProductForm = () => {
         <label>Tags:</label>
         <input type="text" name="tags" value={productData.tags} onChange={handleChange} placeholder="comma-separated tags" />
       </div>
-      <button type="submit">Add Product</button>
+      <button onClick={handleSubmit} type="submit">Add Product</button>
     </form>
   );
 };

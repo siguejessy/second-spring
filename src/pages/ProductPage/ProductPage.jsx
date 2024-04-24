@@ -36,7 +36,15 @@ const ProductPage = () => {
     }
   };
 
-  const isAdmin = user && user.isAdmin;
+  const handleUpdate = async () => {
+    try {
+      // Redirect to a form to update the product
+    } catch (error) {
+      console.error('Error updating product:', error);
+    }
+  }
+
+  const isAdmin = user && user.role === 'admin';
 
   return (
     <div>
@@ -51,11 +59,16 @@ const ProductPage = () => {
           {isAdmin && (
             <div>
               <button onClick={handleDelete}>Delete this product</button>
-              {/* Add update option here */}
+              <button onClick={handleUpdate}>Update this product</button> {/* Add update option here */}
             </div>
           )}
           {!isAdmin && <button>Inquire about this product</button>}
           {/* Add inquire form component here */}
+          <form>
+            <label htmlFor="inquiry">Inquiry:</label>
+            <textarea id="inquiry" name="inquiry" rows="4" cols="50"></textarea>
+            {/* <button onClick={handleInquiry}>Submit Inquiry</button> */}
+          </form>
         </div>
       ) : (
         <p>Loading...</p>
