@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getProductById, deleteProduct } from '../../utilities/products-api';
 import { getUser } from '../../utilities/users-service';
+import GoBackButton from '../../components/GoBackBtn/GoBackBtn';
 
 const ProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -50,6 +51,7 @@ const ProductPage = () => {
 
   return (
     <div>
+      <GoBackButton />
       {product ? (
         <div>
           <h2>{product.name}</h2>

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { index } from '../../utilities/products-api'; // Import the index function
 import CardProductDetail from '../../components/CardProductDetail/CardProductDetail';
+import GoBackButton from '../../components/GoBackBtn/GoBackBtn';
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -26,6 +27,9 @@ const ProductsPage = () => {
 
   return (
     <div>
+     <div>
+    <GoBackButton />
+    </div>
       <h1>All Products</h1>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}

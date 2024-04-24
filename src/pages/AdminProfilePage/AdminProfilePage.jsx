@@ -29,7 +29,9 @@ const AdminProfilePage = () => {
         </Link>
       </div>
       <div>
-        <button>View My Catalogue</button>
+        <Link to="/products">
+        <button>View My Product Catalogue</button>
+        </Link>
         {products.length > 0 ? (
           products.map(product => (
             <div key={product._id}>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { createProduct }from '../../utilities/products-api';
 import './AddProductForm.css';
 import { Navigate } from 'react-router-dom';
+import GoBackButton from '../GoBackBtn/GoBackBtn';
 
 
 const defaultEmojis = {
@@ -76,6 +77,10 @@ const AddProductForm = () => {
   }
 
   return (
+    <div>
+    <GoBackButton />
+    <div className="AddProductForm">
+      <h1>Add a Product</h1>
     <form onSubmit={handleSubmit}>
       <div>
         <label>Name:</label>
@@ -138,6 +143,8 @@ const AddProductForm = () => {
       </div>
       <button onClick={handleSubmit} type="submit">Add Product</button>
     </form>
+    </div>
+    </div>
   );
 };
 
