@@ -3,11 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getProductById, deleteProduct } from '../../utilities/products-api';
 import { getUser } from '../../utilities/users-service';
 import GoBackButton from '../../components/GoBackBtn/GoBackBtn';
+import UpdateProductForm from '../../components/UpdateProductForm/UpdateProductForm';
 
 const ProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [user, setUser] = useState(null);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,13 +41,10 @@ const ProductPage = () => {
     }
   };
 
-  const handleUpdate = async () => {
-    try {
-      // Redirect to a form to update the product
-    } catch (error) {
-      console.error('Error updating product:', error);
-    }
-  }
+  const handleUpdate = () => {
+    // Show the update form
+    setShowUpdateForm(true);
+  };
 
   const isAdmin = user && user.role === 'admin';
 
@@ -63,16 +62,10 @@ const ProductPage = () => {
           {isAdmin && (
             <div>
               <button onClick={handleDelete}>Delete this product</button>
-              <button onClick={handleUpdate}>Update this product</button> {/* Add update option here */}
+              <button onClick={handleUpdate}>Update this product</button>
             </div>
           )}
-          {!isAdmin && <button>Inquire about this product</button>}
-          {/* Add inquire form component here */}
-          <form>
-            <label htmlFor="inquiry">Inquiry:</label>
-            <textarea id="inquiry" name="inquiry" rows="4" cols="50"></textarea>
-            {/* <button onClick={handleInquiry}>Submit Inquiry</button> */}
-          </form>
+          {showUpdateForm && <UpdateProductForm productId={id} />}
         </div>
       ) : (
         <p>Loading...</p>
