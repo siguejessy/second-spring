@@ -1,12 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import CardProductDetail from '../../components/CardProductDetail/CardProductDetail';
-import { getUser } from '../../utilities/users-service';
+import './AdminProfilePage.css';
 
 const AdminProfilePage = () => {
-  const [products, setProducts] = useState([]);
-  const user = getUser();
-
   // useEffect(() => {
   //   const fetchProducts = async () => {
   //     try {
@@ -22,8 +18,9 @@ const AdminProfilePage = () => {
 
   return (
     <main className='AdminProfilePage'>
-      <h2>Welcome to Admin Profile Page</h2>
-      <div>
+      <h2>Welcome to your Admin Profile Page</h2>
+      <p>Here you can add new products to your catalogue or view your existing products.</p>
+        <div>
         <Link to="/products/new">
           <button>Add a Product</button>
         </Link>
@@ -32,16 +29,13 @@ const AdminProfilePage = () => {
         <Link to="/products">
         <button>View My Product Catalogue</button>
         </Link>
-        {products.length > 0 ? (
-          products.map(product => (
-            <div key={product._id}>
-              <CardProductDetail product={product} />
-              {/* Add delete and update functionality as needed */}
-            </div>
-          ))
-        ) : (
-          <div>No products available</div>
-        )}
+      </div>
+      <div className='inquiries'>
+        <h3>Product Inquiries</h3>
+        <p>Here you can view inquiries about your products.</p>
+        <Link to="/inquiries">
+          <button>View Inquiries</button>
+        </Link>
       </div>
     </main>
   );

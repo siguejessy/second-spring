@@ -27,7 +27,11 @@ const ShopPage = () => {
 
   return (
     <div>
-      <h1>Shop</h1>
+      <h2>Shop</h2>
+      <p>Here you can browse all of our products.</p>
+      <p>Click on a product to view more details.</p>
+      <p>Sign up as a customer to submit an inquiry for products you're interested in.</p>
+<br/>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       <div className="product-grid">

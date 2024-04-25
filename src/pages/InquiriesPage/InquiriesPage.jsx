@@ -1,32 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import * as inquiriesAPI from '../../utilities/inquiries-api';
-import Inquiry from '../../components/Inquiry/Inquiry';
-import './InquiriesPage.css';
+import { getInquiries } from '../../utilities/inquiries-api';
+import * as Inquiry from '../../components/CardInquiry/CardInquiry';
 
 const InquiriesPage = () => {
   const [inquiries, setInquiries] = useState([]);
 
   useEffect(() => {
-    async function fetchInquiries() {
+    const fetchInquiries = async () => {
       try {
-        const fetchedInquiries = await inquiriesAPI.getAllForAdmin();
-        setInquiries(fetchedInquiries);
+        const data = await getInquiries();
+        setInquiries(data);
       } catch (error) {
         console.error('Error fetching inquiries:', error);
       }
-    }
-
+    };
     fetchInquiries();
   }, []);
 
   return (
-    <div className="inquiries-page">
+    <div>
       <h2>Inquiries</h2>
-      <div className="inquiries-list">
-        {inquiries.map((inquiry) => (
-          <Inquiry key={inquiry._id} inquiry={inquiry} />
-        ))}
-      </div>
+      {inquiries.map((inquiry) => (
+        <Inquiry key={inquiry._id} inquiry={inquiry} />
+      ))}
     </div>
   );
 };

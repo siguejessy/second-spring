@@ -1,33 +1,31 @@
 import React, { useState } from 'react';
-import { createInquiry } from '../../utilities/inquiries-api';
+import { sendInquiry } from '../../utilities/inquiries-api';
+import './InquiryForm.css';
 
-const InquiryForm = ({ productId }) => {
-  // State for the inquiry message
+const InquiryForm = ({ productId }) => { // Adjust the props destructuring
   const [message, setMessage] = useState('');
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Create the inquiry
-      await createInquiry({ productId, message });
-      // Reset the message input
+      // Ensure the correct key name for the product ID
+      await sendInquiry({ product: productId, message }); 
+      alert('Inquiry sent successfully!');
       setMessage('');
-      // Show a success message or redirect if needed
     } catch (error) {
-      // Handle error
-      console.error('Error creating inquiry:', error);
+      console.error('Error sending inquiry:', error);
+      if (error instanceof Error) {
+        alert(`Failed to send inquiry: ${error.message}`);
+      } else {
+        alert('Failed to send inquiry. Please try again later.');
+      }
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <textarea
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="Type your inquiry message here..."
-        required
-      />
+      <label htmlFor="message">Your Message:</label>
+      <textarea id="message" value={message} onChange={(e) => setMessage(e.target.value)} required></textarea>
       <button type="submit">Send Inquiry</button>
     </form>
   );

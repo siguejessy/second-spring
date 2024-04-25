@@ -34,17 +34,18 @@ export default function NavBar({ user, setUser }) {
           aria-label="Search"
           value={newSearch}
         />
-        <button className="nav-search-btn" type="submit"></button>
+        <button className="nav-search-btn" type="submit">Search </button>
       </form>
       <div>
         <Link to="/shop">Shop</Link>
         &nbsp; | &nbsp;
-        <Link to="/shop/books">Books</Link>
+        {/* ice-box revisit to add shop-by-category */}
+        {/* <Link to="/shop/books">Books</Link>
         &nbsp; | &nbsp;
         <Link to="/shop/decor">Decor</Link>
-        &nbsp; | &nbsp;
+        &nbsp; | &nbsp; 
         <Link to="/shop/glassware">Glassware</Link>
-        &nbsp; | &nbsp;
+        &nbsp; | &nbsp; */} 
         <Link to="/about">About</Link>
         {user ? (
           <>
@@ -54,8 +55,8 @@ export default function NavBar({ user, setUser }) {
             <Link className="logout" to="" onClick={handleLogOut}>
               Log Out
             </Link>
-            <div className="logo">
-              <p>Welcome, {user.username}</p>
+            <div className="nav-welcome">
+              <p>Welcome, {user.username}!</p>
             </div>
           </>
         ) : (

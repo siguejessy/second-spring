@@ -4,12 +4,14 @@ import { getProductById, deleteProduct } from '../../utilities/products-api';
 import { getUser } from '../../utilities/users-service';
 import GoBackButton from '../../components/GoBackBtn/GoBackBtn';
 import UpdateProductForm from '../../components/UpdateProductForm/UpdateProductForm';
+import InquiryForm from '../../components/InquiryForm/InquiryForm'; // Import the InquiryForm component
 
 const ProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [user, setUser] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const [showInquiryForm, setShowInquiryForm] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,13 +46,19 @@ const ProductPage = () => {
     setShowUpdateForm(true);
   };
 
+  const sendInquiry = async () => {
+    setShowInquiryForm(true);
+  };
+
   const isAdmin = user && user.role === 'admin';
+  const isCustomer = user && user.role === 'customer';
 
   return (
     <div>
       <GoBackButton />
       {product ? (
         <div>
+          {product.image && <img src={product.image} alt={product.name} />}
           <h2>{product.name}</h2>
           <p>Emoji: {product.emoji}</p>
           <p>Category: {product.category}</p>
@@ -68,6 +76,9 @@ const ProductPage = () => {
       ) : (
         <p>Loading...</p>
       )}
+      
+      {/* Render the InquiryForm if the user is a customer or if the showInquiryForm state is true */}
+      {(isCustomer || showInquiryForm) && <InquiryForm productId={id} />}
     </div>
   );
 };

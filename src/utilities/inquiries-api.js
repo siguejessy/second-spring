@@ -1,25 +1,41 @@
-import sendRequest from './send-request';
+import sendRequest from './send-request'; // Import the sendRequest function
 
-export async function createInquiry(inquiryData) {
-  return await sendRequest('/api/inquiries', 'POST', inquiryData);
-}
+const BASE_URL = "/api/inquiries";
 
-export async function getAllForUser() {
+const sendInquiry = async (inquiryData) => {
   try {
-    const response = await sendRequest('/api/inquiries');
-    return response;
+    const response = await sendRequest(BASE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(inquiryData),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to send inquiry');
+    }
+    return await response.json();
   } catch (error) {
-    console.error('Error fetching inquiries for user:', error.message);
-    throw new Error('Failed to fetch inquiries for user');
+    throw new Error('Failed to send inquiry. Please try again.');
   }
-}
+};
 
-export async function getAllForAdmin() {
+const getInquiries = async () => {
   try {
-    const response = await sendRequest('/api/admin/inquiries');
-    return response;
+    const response = await sendRequest(BASE_URL, {
+      method: 'GET',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch inquiries');
+    }
+    return await response.json();
   } catch (error) {
-    console.error('Error fetching inquiries for admin:', error.message);
-    throw new Error('Failed to fetch inquiries for admin');
+    throw new Error('Failed to fetch inquiries. Please try again.');
   }
-}
+};
+
+
+
+
+
+export { sendInquiry, getInquiries };

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { getUser } from '../../utilities/users-service';
 
 const CustomerProfilePage = () => {
@@ -27,14 +26,15 @@ const CustomerProfilePage = () => {
           <br />
           <strong>Email:</strong> {user.email}
           <br />
-          <strong>Full Name:</strong> {user.firsrname} {user.lastname}
+          <strong>Full Name:</strong> {user.first_name} {user.last_name}
           <br />
-          <strong>Phone #:</strong> {user.customerphone}
+          <strong>Phone #:</strong> {user.customer_phone}
         </div>
         <br />
-        <Link to="/inquiries">
+        {/* icebox, customer can view the inquiries they've sent */}
+        {/* <Link to="/inquiries">
           <button>view my inquiry list</button>
-        </Link>
+        </Link> */}
         <br />
         <hr />
       </div>

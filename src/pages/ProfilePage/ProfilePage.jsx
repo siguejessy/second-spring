@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { getUser } from '../../utilities/users-service';
 import AdminProfilePage from '../../pages/AdminProfilePage/AdminProfilePage';
 import CustomerProfilePage from '../../pages/CustomerProfilePage/CustomerProfilePage';
@@ -8,16 +8,11 @@ const ProfilePage = () => {
 
   return (
     <main className='ProfilePage'>
-      Hi, {user.username}!
+      <strong>Registered Email:</strong> {user.email}
       <br />
-      Profile Email: {user.email}
-      <br />
-      Profile Role: {user.role}
-      <br />
-      Profile Products: {user.products}
+      <strong>Profile Role: </strong> {user.role}
       <br />
       <br />
-
     <>
       {user.role === 'customer' ? <CustomerProfilePage /> : <AdminProfilePage />}
     </>

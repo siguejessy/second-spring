@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const inquiriesCtrl = require('../../controllers/api/inquiries');
+const { createInquiry, getAllInquiries, getInquiriesByProduct } = require('../../controllers/api/inquiries');
 
-// GET /api/profile/inquiries
-router.get('/', inquiriesCtrl.getAllForUser);
+router.post('/', createInquiry);
+router.get('/', getAllInquiries);
+router.get('/product/:productId', getInquiriesByProduct);
 
 module.exports = router;
