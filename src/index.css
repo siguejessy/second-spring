@@ -1,92 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 :root {
   --white: #FFFFFF;
   --tan-1: #FBF9F6;
   --tan-2: #E7E2DD;
   --tan-3: #E2D9D1;
   --tan-4: #D3C1AE;
-  --orange: #F67F00;
-  --text-light: #968c84;
-  --text-dark: #615954;
+  --green: #6FA64E;
+  --mint-green: #A5D6A7
+  --blush-pink: #F48FB1;
+  --baby-blue: #90CAF9
+  --buttery-yellow: #FFF59D;
 }
 
 *, *:before, *:after {
   box-sizing: border-box;
 }
-
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--tan-4);
-  padding: 2vmin;
-  height: 100vh;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
+/* Global Styles */
 #root {
   height: 100%;
 }
-
-.align-ctr {
-  text-align: center;
-}
-
-.align-rt {
-  text-align: right;
-}
-
-.smaller {
-  font-size: smaller;
-}
-
-.flex-ctr-ctr {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
-.flex-j-end {
-  justify-content: flex-end;
-}
-
 .scroll-y {
   overflow-y: scroll;
 }
 
-.section-heading {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+body {
   background-color: var(--tan-1);
   color: var(--text-dark);
-  border: .1vmin solid var(--tan-3);
-  border-radius: 1vmin;
-  padding: .6vmin;
-  text-align: center;
-  font-size: 2vmin;
+  font-family: 'Roboto', sans-serif;
+  padding: 50px;
+  margin: 20px;
+  height: 100vh;
+}
+.main{
+  max-width: 1200px; 
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.form-container {
-  padding: 3vmin;
-  background-color: var(--tan-1);
-  border: .1vmin solid var(--tan-3);
-  border-radius: 1vmin;
+/* Header Styles */
+.Header {
+  background-color: var(--tan-2); 
+  padding: 20px;
 }
 
-p.error-message {
+.Header h1 {
+  color: var(--text-dark);
+}
+
+.Header h2 {
+  color: var(--text-light); 
+}
+
+/* Navigation Styles */
+nav {
+  background-color: var(--tan-3);
+  padding: 10px;
+}
+
+nav a {
+  color: var(--text-dark);
+  text-decoration: none;
+  padding: 5px 10px;
+}
+
+nav a:hover {
+  background-color: var(--tan-4); 
+}
+
+/* Button Styles */
+button {
+  background-color: var(--green); 
+  color: var(--white);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: darken(var(--green), 10%); /* Darken the green slightly on hover */
+}
+
+/* Anchor Tag Styles */
+a {
   color: var(--orange);
-  text-align: center;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 form {
@@ -94,59 +96,4 @@ form {
   grid-template-columns: 1fr 3fr;
   gap: 1.25vmin;
   color: var(--text-light);
-}
-
-label {
-  font-size: 2vmin;
-  display: flex;
-  align-items: center;
-}
-
-input {
-  padding: 1vmin;
-  font-size: 2vmin;
-  border: .1vmin solid var(--tan-3);
-  border-radius: .5vmin;
-  color: var(--text-dark);
-  background-image: none !important; /* prevent lastpass */
-  outline: none;
-}
-
-input:focus {
-  border-color: var(--orange);
-}
-
-button, a.button {
-  margin: 1vmin;
-  padding: 1vmin;
-  color: var(--white);
-  background-color: var(--orange);
-  font-size: 2vmin;
-  font-weight: bold;
-  text-decoration: none;
-  text-align: center;
-  border: .1vmin solid var(--tan-2);
-  border-radius: .5vmin;
-  outline: none;
-  cursor: pointer;
-}
-
-button.btn-sm {
-  font-size: 1.5vmin;
-  padding: .6vmin .8vmin;
-}
-
-button.btn-xs {
-  font-size: 1vmin;
-  padding: .4vmin .5vmin;
-}
-
-button:disabled, form:invalid button[type="submit"] {
-  cursor: not-allowed;
-  background-color: var(--tan-4);
-}
-
-button[type="submit"] {
-  grid-column: span 2;
-  margin: 1vmin 0 0;
 }

@@ -20,15 +20,10 @@ const CustomerProfilePage = () => {
       <div className="profile">
         {/* <img className="profile-photo" src={user.urlImage} alt="profile" width="150" height="150" /> */}
         <br />
-        <br />
         <div className="setting-profile-details">
-          <strong>User Name:</strong> {user.username}
-          <br />
-          <strong>Email:</strong> {user.email}
-          <br />
-          <strong>Full Name:</strong> {user.first_name} {user.last_name}
-          <br />
-          <strong>Phone #:</strong> {user.customer_phone}
+        </div>
+        <div className="profile-details">
+          <h2>{user.username}'s Profile</h2>
         </div>
         <br />
         {/* icebox, customer can view the inquiries they've sent */}

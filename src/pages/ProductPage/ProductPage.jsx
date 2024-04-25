@@ -43,11 +43,11 @@ const ProductPage = () => {
   };
 
   const handleUpdate = () => {
-    setShowUpdateForm(true);
+    setShowUpdateForm(prevState => !prevState); // Toggle showUpdateForm state
   };
-
-  const sendInquiry = async () => {
-    setShowInquiryForm(true);
+ 
+  const sendInquiry = () => {
+    setShowInquiryForm(prevState => !prevState);
   };
 
   const isAdmin = user && user.role === 'admin';
@@ -77,8 +77,14 @@ const ProductPage = () => {
         <p>Loading...</p>
       )}
       
-      {/* Render the InquiryForm if the user is a customer or if the showInquiryForm state is true */}
-      {(isCustomer || showInquiryForm) && <InquiryForm productId={id} />}
+      {isCustomer && (
+  <button onClick={sendInquiry}>
+    {showInquiryForm ? 'Hide Inquiry Form' : 'Send Inquiry'}
+  </button>
+)}
+
+{showInquiryForm && <InquiryForm productId={id} />}
+
     </div>
   );
 };

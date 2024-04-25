@@ -4,19 +4,20 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./NavBar.css";
 
+// had to jettison the search bar and category pages for now, but keeping the code for future reference
+
 export default function NavBar({ user, setUser }) {
   const navigate = useNavigate();
-  const [newSearch, setNewSearch] = useState("");
-
-  function handleSearch(e) {
-    e.preventDefault();
-    if (newSearch.length > 0) {
-      navigate(`/search/${newSearch}`); // Redirect to /search/:query route
-      setNewSearch("");
-    } else {
-      alert("Search bar empty");
-    }
-  }
+  // const [newSearch, setNewSearch] = useState("");
+  // function handleSearch(e) {
+  //   e.preventDefault();
+  //   if (newSearch.length > 0) {
+  //     navigate(`/search/${newSearch}`); // Redirect to /search/:query route
+  //     setNewSearch("");
+  //   } else {
+  //     alert("Search bar empty");
+  //   }
+  // }
 
   function handleLogOut() {
     userService.logOut();
@@ -25,7 +26,7 @@ export default function NavBar({ user, setUser }) {
 
   return (
     <nav id="navbar" className="navbar">
-      <form className="nav-search" onSubmit={handleSearch}>
+      {/* <form className="nav-search" onSubmit={handleSearch}>
         <input
           onChange={(evt) => setNewSearch(evt.target.value)}
           className="nav-search-input"
@@ -35,7 +36,7 @@ export default function NavBar({ user, setUser }) {
           value={newSearch}
         />
         <button className="nav-search-btn" type="submit">Search </button>
-      </form>
+      </form> */}
       <div>
         <Link to="/shop">Shop</Link>
         &nbsp; | &nbsp;

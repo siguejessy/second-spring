@@ -11,6 +11,7 @@ import AuthPage from '../AuthPage/AuthPage';
 import { getUser } from '../../utilities/users-service';
 import AddProductForm from '../../components/AddProductForm/AddProductForm';
 import ProductsPage from '../ProductsPage/ProductsPage';
+import Header from '../../components/Header/Header';
 
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
   return (
     <>
       <main className="App">
+        <Header />
         <NavBar
           user={user}
           setUser={setUser}

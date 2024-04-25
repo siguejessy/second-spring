@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { sendInquiry } from '../../utilities/inquiries-api';
 import './InquiryForm.css';
 
-const InquiryForm = ({ productId }) => { // Adjust the props destructuring
+const InquiryForm = ({ productId }) => { 
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Ensure the correct key name for the product ID
       await sendInquiry({ product: productId, message }); 
       alert('Inquiry sent successfully!');
       setMessage('');
@@ -26,7 +25,7 @@ const InquiryForm = ({ productId }) => { // Adjust the props destructuring
     <form onSubmit={handleSubmit}>
       <label htmlFor="message">Your Message:</label>
       <textarea id="message" value={message} onChange={(e) => setMessage(e.target.value)} required></textarea>
-      <button type="submit">Send Inquiry</button>
+      <button type="submit">Submit Inquiry</button>
     </form>
   );
 };

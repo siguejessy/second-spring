@@ -1,0 +1,18 @@
+.Header {
+  text-align: center;
+  padding: 20px;
+  background-color: #f9f9f9; /* Soft pastel background */
+}
+
+.Header h1 {
+  font-family: 'Arial', sans-serif; /* Choose a playful and friendly font */
+  font-size: 36px;
+  color: #333; /* Earthy neutral color for contrast */
+}
+
+.Header h2 {
+  font-family: 'Arial', sans-serif;
+  font-size: 24px;
+  color: #666; /* Lighter shade for subtext */
+  margin-top: 10px;
+}
